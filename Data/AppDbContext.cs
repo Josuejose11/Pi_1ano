@@ -1,4 +1,4 @@
-using PI_1ANO.Models;
+using Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace PI_1ANO.Data;

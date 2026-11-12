@@ -1,3 +1,3 @@
 ﻿using PI_1ANO.Data​;
-using PI_1ANO.Models;
+using Models;
 using Microsoft.EntityFrameworkCore;

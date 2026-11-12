@@ -1,6 +1,6 @@
 using PI_1ANO.Data;
 using Microsoft.EntityFrameworkCore;
-namespace PI_1ANO.Models;
+namespace Models;
 public class Produto
 {
     public int Id { get; set; }
