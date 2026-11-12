@@ -1,2 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using PI_1ANO.Data​;
+using PI_1ANO.Models;
+using Microsoft.EntityFrameworkCore;
