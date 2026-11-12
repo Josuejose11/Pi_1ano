@@ -1,9 +1,9 @@
 using Models;
 namespace Validators;
 
-public class GestorValidator : Usuario
+public class UsuarioValidator : Usuario
 {
-    public GestorValidator(string nome, string email, string senha) : base(nome, email, senha)
+    public UsuarioValidator(string nome, string email, string senha) : base(nome, email, senha)
     {
     }
 }

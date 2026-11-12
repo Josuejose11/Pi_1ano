@@ -1,5 +1,6 @@
 using Models;
 using Validators;
+using Microsoft.EntityFrameworkCore;
 namespace Services;
 
 public class UsuarioService
