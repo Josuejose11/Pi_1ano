@@ -7,10 +7,11 @@ public class UsuarioService
 {
     private readonly UsuarioValidator _validator;
 
-    public UsuarioService()
+    public UsuarioService(UsuarioValidator validator)
     {
-        _validator = new UsuarioValidator();
+        _validator = validator;
     }
+    
 
     public bool CadastrarUsuario(Usuario usuario)
     {
