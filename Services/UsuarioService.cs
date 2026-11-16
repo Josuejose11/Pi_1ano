@@ -1,4 +1,5 @@
 using Models;
+using PI_1ANO.Data;
 using Validators;
 using Microsoft.EntityFrameworkCore;
 namespace Services;
@@ -12,8 +13,8 @@ public class UsuarioService
         _validator = validator;
     }
     
-
-    public bool CadastrarUsuario(Usuario usuario)
+    // Cadastra o usuario 
+    public async Task<bool> CadastrarUsuario(Usuario usuario)
     {
         if (!_validator.ValidarNome(usuario.Nome))
             return false;
@@ -24,8 +25,19 @@ public class UsuarioService
         if (!_validator.ValidarSenha(usuario.Senha))
             return false;
 
-        // Aqui entraria a persistência no banco de dados.
+        await using (var db = new AppDbContext())
+        {
+            db.Usuarios.Add(usuario);
+            await db.SaveChangesAsync();
+        }
 
         return true;
+    }
+
+    // Lista todos os usuarios
+    public async Task<List<Usuario>> ListarUsuarios()
+    {
+        await using var db = new AppDbContext();
+        return await db.Usuarios.ToListAsync();
     }
 }

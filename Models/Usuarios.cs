@@ -1,4 +1,4 @@
-// Classe abstrata que representa um usuário genérico 
+using Services;
 namespace Models;
 public abstract class Usuario
 {

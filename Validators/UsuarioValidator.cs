@@ -1,4 +1,5 @@
 using Models;
+using PI_1ANO.Data;
 namespace Validators;
 
 public abstract class UsuarioValidator : Usuario
