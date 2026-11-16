@@ -1,7 +1,7 @@
 using Models;
 namespace Validators;
 
-public class UsuarioValidator : Usuario
+public abstract class UsuarioValidator : Usuario
 {
     public UsuarioValidator() : base("", "", "")
     {
