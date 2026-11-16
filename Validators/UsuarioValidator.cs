@@ -7,7 +7,7 @@ public abstract class UsuarioValidator
 
     public bool ValidarNome(string nome)
     {
-        if (string.IsNullOrWhiteSpace(nome))
+        if (string.IsNullOrWhiteSpace(nome.Trim()))                            
         {
             return false;
         }
@@ -17,11 +17,7 @@ public abstract class UsuarioValidator
 
     public bool ValidarEmail(string email)
     {
-        string Email = email.Replace(" ", "");
-        if (string.IsNullOrWhiteSpace(email))
-        {
-            return false;
-        }
+        // Lista de arrobas para validação de email
         string[] arroba =
         {
             "@gmail.com",
@@ -29,6 +25,13 @@ public abstract class UsuarioValidator
             "@outlook.com",
             "@yahoo.com"
         };
+
+
+        string Email = email.Replace(" ", "");
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return false;
+        }
 
         if (!arroba.Any(a => Email.Contains(a)))
         {
@@ -39,7 +42,7 @@ public abstract class UsuarioValidator
 
     public bool ValidarSenha(string senha)
     {
-        if (string.IsNullOrWhiteSpace(senha) || senha.Length < 6)
+        if (string.IsNullOrWhiteSpace(senha.Trim()) || senha.Length < 6)
         {
             return false;
         }
