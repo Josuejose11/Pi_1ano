@@ -4,7 +4,37 @@ namespace Validators;
 
 public abstract class UsuarioValidator
 {
+    // VALIDACAO TOTAL DO USUARIO
+    public bool ValidarUsuario(Usuario usuario)
+    {
+        if (!ValidarNome(usuario.Nome))
+        {
+            Console.WriteLine("Nome inválido");
+            return false;
+        }
 
+        if (!ValidarEmail(usuario.Email))
+        {
+            Console.WriteLine("Email inválido");
+            return false;
+        }
+
+        if (!ValidarSenha(usuario.Senha))
+        {
+            Console.WriteLine("Senha inválida");
+            return false;
+        }
+
+        if (!ValidarFuncao(usuario.Funcao))
+        {
+            Console.WriteLine("Função inválida");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Validacao nome
     public bool ValidarNome(string nome)
     {
         if (string.IsNullOrWhiteSpace(nome.Trim()))                            
@@ -15,6 +45,7 @@ public abstract class UsuarioValidator
         return true;
     }
 
+    // Validacao email
     public bool ValidarEmail(string email)
     {
         // Lista de arrobas para validação de email
@@ -40,6 +71,7 @@ public abstract class UsuarioValidator
         return true;
     }
 
+    // Validacao senha
     public bool ValidarSenha(string senha)
     {
         if (string.IsNullOrWhiteSpace(senha.Trim()) || senha.Length < 6)
@@ -64,4 +96,21 @@ public abstract class UsuarioValidator
 
         return true;
     }
+
+    // Validacao funcao
+    public bool ValidarFuncao(string funcao)
+    {
+        if (string.IsNullOrWhiteSpace(funcao.Trim()))
+        {
+            return false;
+        }
+
+
+        if (funcao != "Administrador" && funcao != "Cliente")
+        {
+            return false;
+        }
+        return true;
+    }
+
 }
