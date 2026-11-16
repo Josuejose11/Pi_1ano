@@ -1,4 +1,4 @@
-using PI_1ANO.Data​;
+/*using PI_1ANO.Data​;
 using Models;
 using Microsoft.EntityFrameworkCore;
 using Validators;
@@ -95,4 +95,4 @@ do
             Console.ReadLine();
             break;
     }
-} while (true);
+} while (true);*/
