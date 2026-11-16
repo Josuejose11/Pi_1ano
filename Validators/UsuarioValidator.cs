@@ -2,11 +2,8 @@ using Models;
 using PI_1ANO.Data;
 namespace Validators;
 
-public abstract class UsuarioValidator : Usuario
+public abstract class UsuarioValidator
 {
-    public UsuarioValidator() : base("", "", "")
-    {
-    }
 
     public bool ValidarNome(string nome)
     {
@@ -15,13 +12,12 @@ public abstract class UsuarioValidator : Usuario
             return false;
         }
         nome = string.Join(" ", nome.Split(' ', StringSplitOptions.RemoveEmptyEntries));
-        Nome = char.ToUpper(nome[0]) + nome.Substring(1); 
         return true;
     }
 
     public bool ValidarEmail(string email)
     {
-        Email = email.Replace(" ", "");
+        string Email = email.Replace(" ", "");
         if (string.IsNullOrWhiteSpace(email))
         {
             return false;
@@ -63,7 +59,6 @@ public abstract class UsuarioValidator : Usuario
             return false;
         }
 
-        Senha = senha;
         return true;
     }
 }

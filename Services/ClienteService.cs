@@ -7,12 +7,11 @@ namespace Services;
 
 public class ClienteService : UsuarioService
 {
+    public ClienteService(UsuarioValidator validator) : base(validator)
+    {
+    }
     private readonly UsuarioValidator _validator;
 
-    public ClienteService(UsuarioValidator validator)
-    {
-        _validator = validator;
-    }
     
     // Cadastra o cliente
     public async Task<bool> CadastrarCliente(Usuario cliente)
