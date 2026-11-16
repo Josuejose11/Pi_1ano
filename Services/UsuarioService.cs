@@ -40,4 +40,7 @@ public class UsuarioService
         await using var db = new AppDbContext();
         return await db.Usuarios.ToListAsync();
     }
+
+    // Update usuario 
+    
 }
