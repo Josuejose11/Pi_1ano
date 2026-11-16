@@ -20,16 +20,20 @@ public class ProdutoService{
     public static async Task<List<Produto>> ListarProdutos()
     {
         await using var db = new AppDbContext();
-        return await db.Produtos.ToListAsync();
+        var resultado = await db.Produtos.ToListAsync();
+        if (resultado.Count == 0)
+        {
+            Console.WriteLine("Produto não encontrado");
+        }
+        return resultado;
     }
     public static async Task<List<Produto>> BuscarPorNome(string nome)
     {
         await using var db = new AppDbContext();
         var resultado = db.Produtos.Where(p => EF.Functions.Like(p.Nome, $"%{nome}%")).ToList();
-        if (resultado == null)
+        if (resultado.Count == 0)
         {
             Console.WriteLine("Produto não encontrado");
-            return null;
         }
         return resultado;
     }
@@ -49,6 +53,7 @@ public class ProdutoService{
         }
         produto.Nome = nome;
         await db.SaveChangesAsync();
+        Console.WriteLine($"ID: {id} - Produto: {nome} foi alterado com sucesso");
     }
     public static async Task AtualizarPreco(int id, decimal preco)
     {
@@ -66,23 +71,25 @@ public class ProdutoService{
         }
         produto.Preco = preco;
         await db.SaveChangesAsync();
+        Console.WriteLine($"ID: {id} - Preço: {preco} foi alterado com sucesso");
     }
     public static async Task Estocar(int id, int entrada)
     {
         await using var db = new AppDbContext();
+        if (entrada <= 0)
+        {
+            Console.WriteLine("No estoque não pode ser aticionado negativo ou zero");
+            return;
+        }
         var produto = await db.Produtos.FindAsync(id);
         if (produto == null)
         {
             Console.WriteLine("Produto não encontrado");
             return;
         }
-        if (entrada <= 0)
-        {
-            Console.WriteLine("No estoque não pode ser aticionado negativo ou zero");
-            return;
-        }
-        produto.Estoque =+ entrada;
+        produto.Estoque += entrada;
         await db.SaveChangesAsync();
+        Console.WriteLine($"ID: {id} - Foi adicionado ao estoque: {entrada} com sucesso");
     }
     public static async Task DeletarProduto(int id)
     {
