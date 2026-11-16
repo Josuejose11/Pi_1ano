@@ -1,17 +1,12 @@
 using Models;
 namespace Validators;
 
-public class UsuarioValidator : Usuario
+public abstract class UsuarioValidator : Usuario
 {
     public UsuarioValidator() : base("", "", "")
     {
     }
 
-    public bool Validar(Usuario usuario)
-    {
-        return ValidarNome(usuario.Nome) && ValidarEmail(usuario.Email) && ValidarSenha(usuario.Senha);
-    }
-    
     public bool ValidarNome(string nome)
     {
         if (string.IsNullOrWhiteSpace(nome))
