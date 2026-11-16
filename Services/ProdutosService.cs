@@ -4,6 +4,7 @@ namespace Services;
 using Microsoft.EntityFrameworkCore;
 using PI_1ANO.Data;
 public class ProdutoService{
+    // Cadastra o produto
     public static async Task<Produto> CreateProduto(string nome, decimal preco, int estoque)
     {
         await using var db = new AppDbContext();
@@ -17,6 +18,8 @@ public class ProdutoService{
         await db.SaveChangesAsync();
         return produto;
     }
+    
+    // Lista todos os produtos
     public static async Task<List<Produto>> ListarProdutos()
     {
         await using var db = new AppDbContext();
@@ -27,6 +30,8 @@ public class ProdutoService{
         }
         return resultado;
     }
+    
+    // Busca produto por nome
     public static async Task<List<Produto>> BuscarPorNome(string nome)
     {
         await using var db = new AppDbContext();
@@ -37,6 +42,8 @@ public class ProdutoService{
         }
         return resultado;
     }
+    
+    // altera o nome do produto
     public static async Task AlterarNome(int id, string nome)
     {
         await using var db = new AppDbContext();
@@ -55,6 +62,8 @@ public class ProdutoService{
         await db.SaveChangesAsync();
         Console.WriteLine($"ID: {id} - Produto: {nome} foi alterado com sucesso");
     }
+    
+    // Atualiza o preço do produto
     public static async Task AtualizarPreco(int id, decimal preco)
     {
         await using var db = new AppDbContext();
@@ -73,6 +82,8 @@ public class ProdutoService{
         await db.SaveChangesAsync();
         Console.WriteLine($"ID: {id} - Preço: {preco} foi alterado com sucesso");
     }
+    
+    // Adiciona ao estoque do produto
     public static async Task Estocar(int id, int entrada)
     {
         await using var db = new AppDbContext();
@@ -91,6 +102,8 @@ public class ProdutoService{
         await db.SaveChangesAsync();
         Console.WriteLine($"ID: {id} - Foi adicionado ao estoque: {entrada} com sucesso");
     }
+    
+    // Deleta o produto
     public static async Task DeletarProduto(int id)
     {
         await using var db = new AppDbContext();
