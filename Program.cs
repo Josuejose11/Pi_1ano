@@ -1,16 +1,4 @@
-﻿// =====================================================================
-//  Program.cs - ponto de entrada do sistema "Meu Comércio"
-//
-//  Antes: era um programa de console (menu no terminal).
-//  Agora: é um pequeno servidor web que faz duas coisas:
-//    1) entrega a pasta wwwroot (o index.html, que é o visual);
-//    2) responde às chamadas /api/... que o HTML faz para pedir/gravar dados.
-//
-//  Fluxo de uma ação (ex.: clicar em "Novo produto"):
-//    HTML (JavaScript) --fetch--> /api/produtos --> endpoint C# --> AppDbContext --> MySQL
-//    HTML <------------- JSON <------------------- endpoint C# <--------------------
-// =====================================================================
-using Api;
+﻿using Api;
 using PI_1ANO.Data;
 
 var builder = WebApplication.CreateBuilder(args);
