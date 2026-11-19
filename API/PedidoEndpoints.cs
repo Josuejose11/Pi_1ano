@@ -41,7 +41,7 @@ public static class PedidoEndpoints
             if (dto.Itens == null || dto.Itens.Count == 0)
                 return Resposta.Erro("O carrinho está vazio.");
 
-            var cliente = await db.Usuarios.OfType<Cliente>().FirstOrDefaultAsync(c => c.Id == dto.ClienteId);
+            var cliente = await db.Usuarios.OfType<Usuario>().FirstOrDefaultAsync(c => c.Id == dto.ClienteId);
             if (cliente == null) return Resposta.NaoEncontrado("Cliente não encontrado.");
 
             // Se o mesmo produto veio em duas linhas, junta numa só somando as quantidades.

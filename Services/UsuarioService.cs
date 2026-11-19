@@ -2,21 +2,16 @@ using Models;
 using PI_1ANO.Data;
 using Validators;
 using Microsoft.EntityFrameworkCore;
+
 namespace Services;
 
 public class UsuarioService
 {
-    private readonly UsuarioValidator _validator;
-
-    public UsuarioService(UsuarioValidator validator)
-    {
-        _validator = validator;
-    }
     
     // Cadastra o usuario 
     public async Task<bool> CadastrarUsuario(Usuario usuario)
     {
-        if (!_validator.ValidarUsuario(usuario))
+        if (!UsuarioValidator.ValidarUsuario(usuario))
             return false;
 
         await using (var db = new AppDbContext())
@@ -29,7 +24,7 @@ public class UsuarioService
     }
 
     // Lista todos os usuarios
-    public async Task<List<Usuario>> ListarUsuarios()
+    public static async Task<List<Usuario>> ListarUsuarios()
     {
         await using var db = new AppDbContext();
         return await db.Usuarios.ToListAsync();
@@ -38,13 +33,13 @@ public class UsuarioService
     // Update usuario 
     public async Task<bool> AtualizarUsuario(Usuario usuario)
     {
-        if (!_validator.ValidarNome(usuario.Nome))
+        if (!UsuarioValidator.ValidarNome(usuario.Nome))
             return false;
 
-        if (!_validator.ValidarEmail(usuario.Email))
+        if (!UsuarioValidator.ValidarEmail(usuario.Email))
             return false;
 
-        if (!_validator.ValidarSenha(usuario.Senha))
+        if (!UsuarioValidator.ValidarSenha(usuario.Senha))
             return false;
 
         await using var db = new AppDbContext();

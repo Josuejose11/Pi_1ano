@@ -8,6 +8,7 @@ public class AppDbContext : DbContext
     //classes aqui
     public DbSet<Produto> Produtos { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Pedido> Pedidos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
