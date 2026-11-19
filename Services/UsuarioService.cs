@@ -52,7 +52,7 @@ public class UsuarioService
         usuario1.Nome = usuario.Nome;
         usuario1.Email = usuario.Email;
         usuario1.Senha = usuario.Senha;
-        usuario1.Funcao = usuario.Funcao;
+        usuario1.Tipo = usuario.Tipo;
         await db.SaveChangesAsync();
         Console.WriteLine($"Usuario de ID: {usuario1.Id} | Nome: {usuario1.Nome} foi atualizado com sucesso");
         return true;
