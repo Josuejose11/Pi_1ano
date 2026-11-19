@@ -4,7 +4,7 @@ namespace Services;
 using Microsoft.EntityFrameworkCore;
 using PI_1ANO.Data;
 public class PedidoService{
-    public static async Task<Pedido> CreatePedido(int usuarioId, List<ItemPedido> ItensPedidos)
+    public static async Task<Pedido?> CreatePedido(int usuarioId, List<ItemPedido> ItensPedidos)
     {
         await using var db = new AppDbContext();
         var usuario = await db.Usuarios.FindAsync(usuarioId);
@@ -44,7 +44,7 @@ public class PedidoService{
         }
         return resultado;
     }
-    public static async Task cancelarPedido(int pedidoId)
+    public static async Task CancelarPedido(int pedidoId)
     {
         await using var db = new AppDbContext();
         var pedido = await db.Pedidos.Include(p => p.Itens).ThenInclude(i => i.Produto).FirstOrDefaultAsync(p => p.Id == pedidoId);
