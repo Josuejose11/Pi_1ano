@@ -2,21 +2,16 @@ using Models;
 using PI_1ANO.Data;
 using Validators;
 using Microsoft.EntityFrameworkCore;
+
 namespace Services;
 
 public class UsuarioService
 {
-    private readonly UsuarioValidator _validator;
-
-    public UsuarioService(UsuarioValidator validator)
-    {
-        _validator = validator;
-    }
     
     // Cadastra o usuario 
     public async Task<bool> CadastrarUsuario(Usuario usuario)
     {
-        if (!_validator.ValidarUsuario(usuario))
+        if (!UsuarioValidator.ValidarUsuario(usuario))
             return false;
 
         await using (var db = new AppDbContext())
@@ -29,7 +24,7 @@ public class UsuarioService
     }
 
     // Lista todos os usuarios
-    public async Task<List<Usuario>> ListarUsuarios()
+    public static async Task<List<Usuario>> ListarUsuarios()
     {
         await using var db = new AppDbContext();
         return await db.Usuarios.ToListAsync();
@@ -38,8 +33,15 @@ public class UsuarioService
     // Update usuario 
     public async Task<bool> AtualizarUsuario(int id ,Usuario usuario)
     {
-        if (!_validator.ValidarUsuario(usuario))
+        if (!UsuarioValidator.ValidarNome(usuario.Nome, out string nomeTratado))
             return false;
+
+        if (!UsuarioValidator.ValidarEmail(usuario.Email))
+            return false;
+
+        if (!UsuarioValidator.ValidarSenha(usuario.Senha))
+            return false;
+
         await using var db = new AppDbContext();
         var usuario1 = await db.Usuarios.FindAsync(id);
         if (usuario1 == null)
@@ -50,7 +52,7 @@ public class UsuarioService
         usuario1.Nome = usuario.Nome;
         usuario1.Email = usuario.Email;
         usuario1.Senha = usuario.Senha;
-        usuario1.Funcao = usuario.Funcao;
+        usuario1.Tipo = usuario.Tipo;
         await db.SaveChangesAsync();
         Console.WriteLine($"Usuario de ID: {usuario1.Id} | Nome: {usuario1.Nome} foi atualizado com sucesso");
         return true;

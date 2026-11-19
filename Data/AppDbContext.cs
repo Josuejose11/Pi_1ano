@@ -20,4 +20,32 @@ public class AppDbContext : DbContext
             Password=Senac2026;"
         );
     }
+
+    // Configurando os relacionamentos entre as entidades
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Cliente e Gestor ficam na mesma tabela. A coluna "Tipo" recebe "cliente" ou "gestor".
+        modelBuilder.Entity<Usuario>(u =>
+        {
+            // E-mail único: não deixa duas contas com o mesmo e-mail.
+            u.Property(x => x.Email).HasMaxLength(150);
+            // O MaxLength é obrigatório no MySQL para poder criar um índice em texto.
+            u.HasIndex(x => x.Email).IsUnique();
+        });
+
+
+        // Restrict = o banco recusa apagar um cliente que tem pedidos
+        // (ou um produto que aparece em pedidos). Protege o histórico de vendas.
+        modelBuilder.Entity<Pedido>()
+            .HasOne(p => p.Cliente)
+            .WithMany()
+            .HasForeignKey(p => p.ClienteId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ItemPedido>()
+            .HasOne(i => i.Produto)
+            .WithMany()
+            .HasForeignKey(i => i.ProdutoId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
 }
