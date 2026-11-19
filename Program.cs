@@ -1,21 +1,27 @@
 ﻿using Services;
 using Models;
+using Validators;
+var usuarioService = new UsuarioService(new UsuarioValidator());
 
 do
 {
     Console.Clear();
     Console.WriteLine("--- MENU ---");
-    Console.WriteLine("1- Cadastrar Produto");
-    Console.WriteLine("2- Listar Produtos");
-    Console.WriteLine("3- Buscar Produto");
-    Console.WriteLine("4- Alterar Nome");
-    Console.WriteLine("5- Atualizar Preço");
-    Console.WriteLine("6- Estocar");
-    Console.WriteLine("7- Excluir Produto");
-    Console.WriteLine("8- Criar Pedido");
-    Console.WriteLine("9- Listar Pedidos");
-    Console.WriteLine("10- Cancelar Pedidos");
-    Console.WriteLine("0- SAIR");
+    Console.WriteLine("1 - Cadastrar Produto");
+    Console.WriteLine("2 - Listar Produtos");
+    Console.WriteLine("3 - Buscar Produto");
+    Console.WriteLine("4 - Alterar Nome");
+    Console.WriteLine("5 - Atualizar Preço");
+    Console.WriteLine("6 - Estocar");
+    Console.WriteLine("7 - Excluir Produto");
+    Console.WriteLine("8 - Cadastrar Usuario");
+    Console.WriteLine("9 - Listar Usuarios");
+    Console.WriteLine("10- Atualizar Usuario");
+    Console.WriteLine("11- Excluir Usuario");
+    Console.WriteLine("12- Criar Pedido");
+    Console.WriteLine("13- Listar Pedidos");
+    Console.WriteLine("14- Cancelar Pedidos");
+    Console.WriteLine("0 - SAIR");
  
     var opcao = Console.ReadLine();
  
@@ -45,7 +51,7 @@ do
             var produtos = await ProdutoService.ListarProdutos();
             foreach (var p in produtos)
             {
-                Console.WriteLine($"ID: {p.Id}, Nome: {p.Nome} | Preço: {p.Preco}R$ | Estoque: {p.Estoque}");
+                Console.WriteLine($"ID: {p.Id} | Nome: {p.Nome} | Preço: {p.Preco}R$ | Estoque: {p.Estoque}");
             }
             Console.ReadLine();
             break;
@@ -94,8 +100,65 @@ do
             await ProdutoService.DeletarProduto(id3);
             Console.ReadLine();
             break;
-        
+
         case "8":
+            Console.WriteLine("Digite o nome de usuario:");
+            var nome3 = Console.ReadLine();
+ 
+            Console.WriteLine("Digite seu Email(Precisa ter '@'exemplo: @gmail.com):");
+            var email = Console.ReadLine();
+ 
+            Console.WriteLine("Digite a senha(Não pode ter mais que 10 caracterias ou menor que 6, não esqueça ela):");
+            var senha = Console.ReadLine();
+
+            Console.WriteLine("Digite a função do usuario(Cliente ou Administrador):");
+            var funcao = Console.ReadLine();
+
+            var usuario = new Usuario(nome3, email, senha, funcao);
+ 
+            await usuarioService.CadastrarUsuario(usuario);
+            Console.ReadLine();
+            break;
+
+        case "9":
+            var usuarios = await usuarioService.ListarUsuarios();
+            foreach (var u in usuarios)
+            {
+                Console.WriteLine($"ID: {u.Id} | Nome: {u.Nome} | Email: {u.Email}");
+            }
+            Console.ReadLine();
+            break;
+
+        case "10":
+            Console.WriteLine("Digite o ID:");
+            var id4 = int.Parse(Console.ReadLine()!);
+
+            Console.WriteLine("Digite o novo nome de usuario:");
+            var nome4 = Console.ReadLine();
+ 
+            Console.WriteLine("Digite seu novo Email(Precisa ter '@'exemplo: @gmail.com):");
+            var email1 = Console.ReadLine();
+ 
+            Console.WriteLine("Digite a nova senha(Não pode ter mais que 10 caracterias ou menor que 6, não esqueça ela):");
+            var senha1 = Console.ReadLine();
+
+            Console.WriteLine("Digite a nova função do usuario(Cliente ou Administrador):");
+            var funcao1 = Console.ReadLine();
+
+            var usuario1 = new Usuario(nome4, email1, senha1, funcao1);
+ 
+            await usuarioService.AtualizarUsuario(id4, usuario1);
+            Console.ReadLine();
+            break;
+        
+        case "11":
+            Console.WriteLine("Digite o ID:");
+            var id5 = int.Parse(Console.ReadLine()!);
+            await usuarioService.DeletarUsuario(id5);
+            Console.ReadLine();
+            break;
+
+        case "12":
                 Console.WriteLine("Digite o ID do usuário:");
                 int usuarioId = int.Parse(Console.ReadLine()!);
 
@@ -128,20 +191,20 @@ do
                 Console.ReadLine();
                 break;
 
-            case "9":
+            case "13":
                 var pedidos = await PedidoService.ListarPedidos();
                 foreach (var p in pedidos)
                 {
                     Console.WriteLine($"\nPedido de ID{p.Id} | Status: {p.Status} | Cliente: {p.Usuario.Nome} | Total: {p.ValorTotal}R$");
                     foreach (var item in p.Itens)
                     {
-                        Console.WriteLine($"   {item.Quantidade} x {item.Produto.Nome} ({item.PrecoUnitario}R$)");
+                        Console.WriteLine($" |  {item.Quantidade} x {item.Produto.Nome} ({item.PrecoUnitario}R$)");
                     }
                 }
                 Console.ReadLine();
                 break;
 
-            case "10":
+            case "14":
                 Console.WriteLine("Digite o ID do pedido para cancelar:");
                 int pedidoId = int.Parse(Console.ReadLine()!);
                 await PedidoService.CancelarPedido(pedidoId);
@@ -153,6 +216,7 @@ do
 
             default:
                 Console.WriteLine("Opção inválida!");
+                Console.ReadLine();
                 break;
     }
 } while (true);

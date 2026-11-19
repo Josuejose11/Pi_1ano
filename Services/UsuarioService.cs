@@ -24,7 +24,7 @@ public class UsuarioService
             db.Usuarios.Add(usuario);
             await db.SaveChangesAsync();
         }
-
+        Console.WriteLine($"Usuario de ID: {usuario.Id} | Nome: {usuario.Nome} adicionado com sucesso");
         return true;
     }
 
@@ -36,21 +36,23 @@ public class UsuarioService
     }
 
     // Update usuario 
-    public async Task<bool> AtualizarUsuario(Usuario usuario)
+    public async Task<bool> AtualizarUsuario(int id ,Usuario usuario)
     {
-        if (!_validator.ValidarNome(usuario.Nome))
+        if (!_validator.ValidarUsuario(usuario))
             return false;
-
-        if (!_validator.ValidarEmail(usuario.Email))
-            return false;
-
-        if (!_validator.ValidarSenha(usuario.Senha))
-            return false;
-
         await using var db = new AppDbContext();
-        db.Usuarios.Update(usuario);
+        var usuario1 = await db.Usuarios.FindAsync(id);
+        if (usuario1 == null)
+        {
+            Console.WriteLine("Usuario não encontrado");
+            return false;
+        }
+        usuario1.Nome = usuario.Nome;
+        usuario1.Email = usuario.Email;
+        usuario1.Senha = usuario.Senha;
+        usuario1.Funcao = usuario.Funcao;
         await db.SaveChangesAsync();
-
+        Console.WriteLine($"Usuario de ID: {usuario1.Id} | Nome: {usuario1.Nome} foi atualizado com sucesso");
         return true;
     }
 

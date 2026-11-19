@@ -2,7 +2,7 @@ using Models;
 using PI_1ANO.Data;
 namespace Validators;
 
-public abstract class UsuarioValidator
+public class UsuarioValidator
 {
     // VALIDACAO TOTAL DO USUARIO
     public bool ValidarUsuario(Usuario usuario)
@@ -83,13 +83,13 @@ public abstract class UsuarioValidator
         bool num = senha.Any(c => char.IsDigit(c));
         bool carac = senha.Any(c => !char.IsLetterOrDigit(c));
  
-        if (senha.Length > 10 || senha.Length < 1)
+        if (senha.Length > 10 || senha.Length < 6)
         {
             return false;    
         }
            
            
-        if (!letra && !num && !carac)
+        if (!letra || !num || !carac)
         {      
             return false;
         }

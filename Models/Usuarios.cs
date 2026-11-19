@@ -8,10 +8,11 @@ public class Usuario
     public string Senha { get; set; }
     public string Funcao { get; set; }
 
-    protected Usuario(string nome, string email, string senha)
+    public Usuario(string nome, string email, string senha, string funcao)
     {
         Nome = nome;
         Email = email;
         Senha = senha;
+        Funcao = funcao;
     }
 }
