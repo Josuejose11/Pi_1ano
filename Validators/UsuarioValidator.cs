@@ -2,12 +2,12 @@ using Models;
 using PI_1ANO.Data;
 namespace Validators;
 
-public class UsuarioValidator
+public static class UsuarioValidator
 {
     // VALIDACAO TOTAL DO USUARIO
-    public bool ValidarUsuario(Usuario usuario)
+    public static bool ValidarUsuario(Usuario usuario)
     {
-        if (!ValidarNome(usuario.Nome))
+        if (!ValidarNome(usuario.Nome, out string nomeTratado))
         {
             Console.WriteLine("Nome inválido");
             return false;
@@ -25,7 +25,7 @@ public class UsuarioValidator
             return false;
         }
 
-        if (!ValidarFuncao(usuario.Funcao))
+        if (!ValidarFuncao(usuario.Tipo))
         {
             Console.WriteLine("Função inválida");
             return false;
@@ -35,18 +35,20 @@ public class UsuarioValidator
     }
 
     // Validacao nome
-    public bool ValidarNome(string nome)
+    public static bool ValidarNome(string nome, out string nomeTratado)
     {
+        nomeTratado = string.Empty;
+
         if (string.IsNullOrWhiteSpace(nome.Trim()))                            
         {
             return false;
         }
-        nome = string.Join(" ", nome.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        nomeTratado = string.Join(" ", nome.Split(' ', StringSplitOptions.RemoveEmptyEntries));
         return true;
     }
 
     // Validacao email
-    public bool ValidarEmail(string email)
+    public static bool ValidarEmail(string email)
     {
         // Lista de arrobas para validação de email
         string[] arroba =
@@ -58,13 +60,12 @@ public class UsuarioValidator
         };
 
 
-        string Email = email.Replace(" ", "");
         if (string.IsNullOrWhiteSpace(email))
         {
             return false;
         }
 
-        if (!arroba.Any(a => Email.Contains(a)))
+        if (!arroba.Any(a => email.Contains(a)))
         {
             return false;
         }
@@ -72,7 +73,7 @@ public class UsuarioValidator
     }
 
     // Validacao senha
-    public bool ValidarSenha(string senha)
+    public static bool ValidarSenha(string senha)
     {
         if (string.IsNullOrWhiteSpace(senha.Trim()) || senha.Length < 6)
         {
@@ -98,7 +99,7 @@ public class UsuarioValidator
     }
 
     // Validacao funcao
-    public bool ValidarFuncao(string funcao)
+    public static bool ValidarFuncao(string funcao)
     {
         if (string.IsNullOrWhiteSpace(funcao.Trim()))
         {

@@ -6,10 +6,9 @@ public class Pedido
 {
     public int Id { get; set; }
     public DateTime Data { get; set; }
-    public string Status { get; set; } = "Aprovado";
-    public decimal? ValorTotal { get; set; }
-    public int UsuarioId { get; set; }
-    public Usuario Usuario { get; set; } = null!;
+    public decimal Valor { get; set; }
+    public int ClienteId { get; set; }
+    public Usuario Cliente { get; set; } = null!;
     public List<ItemPedido> Itens { get; set; } = new();
     public void adicionarItem(Produto produto, int quantidade)
     {

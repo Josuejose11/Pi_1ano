@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meu Comércio - gestão para pequenas lojas</title>
+<meta name="description" content="Sistema de gestão para pequenas lojas.">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#F1F4EF; --folha:#FFFFFF; --tinta:#12323B; --tinta-suave:#516870; --linha:#D3DBD5;
+  --etiqueta:#F4C430; --etiqueta-tinta:#2B2200;
+  --ok:#1E7B58; --ok-fundo:#DDF1E8; --alerta:#B93A2A; --alerta-fundo:#F8E1DD; --aviso:#7A5A00; --aviso-fundo:#FBEFC4;
+  --titulo:'Bricolage Grotesque',system-ui,sans-serif; --texto:'Instrument Sans',system-ui,sans-serif;
+  --logo:url("data:image/png;base64,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");
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--texto);font-size:16px;line-height:1.5}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-family:var(--titulo);line-height:1.15;letter-spacing:-.01em}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #2457D6;outline-offset:2px}
+[hidden]{display:none!important}
+
+/* botões e campos */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em;min-height:40px;padding:0 16px;border-radius:8px;border:1.5px solid var(--tinta);background:var(--tinta);color:#fff;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:hover{background:#0A2229}
+.btn.sec{background:transparent;color:var(--tinta);border-color:var(--linha)}
+.btn.sec:hover{background:#fff;border-color:var(--tinta)}
+.btn.perigo{background:transparent;color:var(--alerta);border-color:#E3B8B1}
+.btn.perigo:hover{background:var(--alerta-fundo);border-color:var(--alerta)}
+.btn.peq{min-height:32px;padding:0 10px;font-size:.9rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.campo{display:grid;gap:6px;margin-bottom:14px}
+.campo>span{font-weight:600;font-size:.95rem}
+.campo small{color:var(--tinta-suave)}
+input,select{width:100%;min-height:42px;padding:0 12px;border:1.5px solid var(--linha);border-radius:8px;background:#fff}
+input:focus,select:focus{border-color:var(--tinta)}
+.erro{background:var(--alerta-fundo);color:var(--alerta);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-weight:500}
+.vazio{padding:40px 16px;text-align:center;color:var(--tinta-suave)}
+.vazio strong{display:block;color:var(--tinta);font-family:var(--titulo);font-size:1.15rem;margin-bottom:4px}
+
+/* marca */
+.marca{font-family:var(--titulo);font-weight:800;font-size:1.3rem;display:inline-flex;align-items:center;gap:10px}
+.logo,.marca::before{content:"";display:inline-block;flex:none;background:currentColor;-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
+.marca::before{width:1.5em;height:1.5em}
+
+/* login */
+.auth{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr}
+.auth-hero{background:var(--tinta);color:#EAF1EC;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;gap:22px;overflow:hidden}
+.logo-grande{width:132px;height:132px;color:var(--etiqueta)}
+.auth-hero h1{font-size:clamp(2.4rem,4.4vw,3.8rem);font-weight:800;color:#fff}
+.auth-hero p{max-width:34ch;font-size:1.15rem;color:#B9CCC4}
+.auth-form{padding:48px 24px;display:flex;align-items:center;justify-content:center}
+.auth-caixa{width:min(400px,100%)}
+.auth-caixa h2{font-size:1.7rem;margin-bottom:18px}
+.segmento{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--tinta);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.segmento button{background:#fff;border:0;min-height:42px;font-weight:600;cursor:pointer}
+.segmento button[aria-pressed="true"]{background:var(--tinta);color:#fff}
+.abas{display:flex;gap:20px;border-bottom:1.5px solid var(--linha);margin-bottom:20px}
+.abas button{background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1.5px;padding:8px 0;font-weight:600;color:var(--tinta-suave);cursor:pointer}
+.abas button[aria-selected="true"]{color:var(--tinta);border-bottom-color:var(--etiqueta)}
+.demo-info{margin-top:22px;padding:14px;border:1.5px dashed var(--linha);border-radius:10px;font-size:.9rem;color:var(--tinta-suave)}
+.demo-info strong{color:var(--tinta)}
+.demo-info p+p{margin-top:4px}
+@media(max-width:860px){.auth{grid-template-columns:1fr}.auth-hero{padding:28px 24px;gap:12px}.logo-grande{width:60px;height:60px}.auth-hero h1{font-size:2rem}}
+
+/* cliente */
+.topo{display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;padding:12px 24px;background:var(--folha);border-bottom:1.5px solid var(--tinta);position:sticky;top:0;z-index:5}
+.topo nav{display:flex;gap:4px}
+.topo nav button,.lateral nav button{background:none;border:0;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer}
+.topo nav button[aria-current]{background:var(--aviso-fundo)}
+.topo-dir{margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.contador{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--etiqueta);color:var(--etiqueta-tinta);font-size:.85rem;font-weight:700}
+.pagina{padding:28px 24px 64px;max-width:1180px;margin:0 auto}
+.pagina-topo{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.pagina-topo h1{font-size:2rem;font-weight:800}
+.busca{width:300px;max-width:100%}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
+.tag{position:relative;background:var(--folha);border:1.5px solid var(--tinta);border-radius:16px 16px 10px 10px;padding:38px 16px 0;display:flex;flex-direction:column;overflow:hidden}
+.tag::before{content:"";position:absolute;top:12px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--papel);border:1.5px solid var(--tinta)}
+.tag h3{font-size:1.15rem;margin-bottom:6px}
+.tag .nota{color:var(--tinta-suave);font-size:.92rem;min-height:1.4em}
+.tag .nota.baixo{color:var(--aviso);font-weight:600}
+.tag .nota.zero{color:var(--alerta);font-weight:600}
+.tag .faixa{margin:14px -16px 0;background:var(--etiqueta);color:var(--etiqueta-tinta);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tag.esgotado .faixa{background:#E4E8E4;color:var(--tinta-suave)}
+.preco{font-family:var(--titulo);font-weight:800;font-size:1.55rem}
+.pedido{background:#fff;border:1.5px solid var(--tinta);border-radius:12px;padding:18px;margin-bottom:16px}
+.pedido-topo{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.pedido ul{list-style:none;margin:0 0 12px;padding:0}
+.pedido li{display:flex;justify-content:space-between;gap:12px;padding:4px 0;border-bottom:1px dashed var(--linha)}
+.pedido-rodape{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.total{font-family:var(--titulo);font-weight:800;font-size:1.3rem}
+
+/* gaveta do carrinho e modal */
+dialog{color:var(--tinta)}
+dialog::backdrop{background:rgba(18,50,59,.45)}
+dialog.gaveta{margin:0 0 0 auto;height:100dvh;max-height:none;width:min(420px,100vw);border:0;border-left:1.5px solid var(--tinta);padding:0;background:var(--papel)}
+dialog.gaveta[open]{display:flex;flex-direction:column;animation:entra .22s ease-out}
+@keyframes entra{from{transform:translateX(28px);opacity:0}}
+.g-topo{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1.5px solid var(--tinta);background:#fff}
+.g-topo h2{font-size:1.4rem}
+#g-corpo{flex:1;overflow:auto;padding:12px 20px;display:flex;flex-direction:column}
+.item-carrinho{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--linha)}
+.item-carrinho strong{font-weight:600}
+.qtd{display:inline-flex;align-items:center;border:1.5px solid var(--linha);border-radius:8px;background:#fff}
+.qtd button{width:34px;height:34px;background:none;border:0;font-size:1.1rem;cursor:pointer}
+.qtd span{min-width:28px;text-align:center;font-variant-numeric:tabular-nums}
+.g-rodape{margin-top:auto;padding-top:16px}
+.g-rodape .linha-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.g-rodape .btn{width:100%}
+dialog#modal{border:1.5px solid var(--tinta);border-radius:14px;padding:24px;width:min(520px,calc(100vw - 32px));background:#fff}
+dialog#modal:has(#linhas){width:min(680px,calc(100vw - 32px))}
+dialog#modal h2{font-size:1.4rem;margin-bottom:16px}
+dialog#modal p.texto{margin-bottom:18px}
+.m-acoes{display:flex;justify-content:flex-end;gap:10px}
+
+/* gestor */
+.gestor{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+.lateral{background:var(--tinta);color:#E8EFEA;padding:24px 16px;display:flex;flex-direction:column;gap:28px;position:sticky;top:0;height:100vh}
+.lateral .marca{color:#fff;padding:0 8px;font-size:1.12rem;white-space:nowrap}
+.lateral nav{display:flex;flex-direction:column;gap:4px}
+.lateral nav button{color:inherit;text-align:left;border-left:4px solid transparent;border-radius:6px}
+.lateral nav button:hover{background:rgba(255,255,255,.06)}
+.lateral nav button[aria-current]{background:rgba(255,255,255,.1);border-left-color:var(--etiqueta)}
+.lateral .rodape{margin-top:auto;display:grid;gap:10px;font-size:.9rem}
+.lateral .rodape .btn{background:transparent;border-color:rgba(255,255,255,.35);color:#fff}
+.lateral .rodape .btn:hover{background:rgba(255,255,255,.1)}
+.lateral .quem{padding:0 8px;color:#B9CCC4}
+.lateral .quem strong{display:block;color:#fff}
+.gestor .pagina{margin:0;width:100%;max-width:1100px;min-width:0}
+.modo-demo{padding:10px;border-radius:8px;background:rgba(244,196,48,.14);color:#F7DE8A;font-size:.85rem}
+.tabela-wrap{overflow-x:auto;background:#fff;border:1.5px solid var(--tinta);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:middle}
+th{font-weight:600;color:var(--tinta-suave);font-size:.9rem}
+tr:last-child td{border-bottom:0}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.acoes{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:2px 10px 2px 8px;border-radius:999px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.chip.ok{background:var(--ok-fundo);color:var(--ok)}
+.chip.aviso{background:var(--aviso-fundo);color:var(--aviso)}
+.chip.alerta{background:var(--alerta-fundo);color:var(--alerta)}
+.resumo{display:flex;flex-wrap:wrap;gap:12px 40px;margin-bottom:30px}
+.resumo div{min-width:140px}
+.resumo .valor{font-family:var(--titulo);font-weight:800;font-size:2rem;display:block;line-height:1.1}
+.resumo .rotulo{color:var(--tinta-suave)}
+.duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;align-items:start}
+.duas h2{font-size:1.25rem;margin-bottom:12px}
+.itens-resumo{max-width:34ch;color:var(--tinta-suave);font-size:.92rem}
+@media(max-width:800px){
+  .gestor{grid-template-columns:1fr}
+  .lateral{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 16px}
+  .lateral nav{flex-direction:row;flex-wrap:wrap}
+  .lateral .rodape{margin:0 0 0 auto;display:flex;align-items:center}
+  .lateral .quem,.modo-demo{display:none}
+  .pagina{padding:20px 16px 48px}
+}
+
+.atalhos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:40px}
+.atalho{background:#fff;border:1.5px solid var(--linha);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.atalho h3{font-size:1.15rem}
+.atalho p{color:var(--tinta-suave)}
+.atalho .info{color:var(--tinta);font-weight:600;margin-bottom:8px}
+.atalho .btn{align-self:flex-start;margin-top:auto}
+.bloco{margin-bottom:40px}
+.bloco h2{font-size:1.4rem}
+.linha-item{display:grid;grid-template-columns:1fr 80px auto;gap:8px;margin-bottom:8px}
+@media(max-width:520px){.linha-item{grid-template-columns:1fr 72px}.linha-item .btn{grid-column:1/-1}}
+
+/* aviso */
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--tinta);color:#fff;padding:12px 18px;border-radius:10px;font-weight:500;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.erro{background:var(--alerta)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<dialog id="modal"></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   MEU COMÉRCIO - front end
+   O front end conversa com o sistema só pelo objeto `api` (mais abaixo).
+   - Sem servidor C# rodando: usa o MODO DEMONSTRAÇÃO (dados no navegador).
+   - Com servidor C# respondendo em /api/ping: usa a API de verdade.
+
+   CONTRATO DA API (JSON; erros: status 4xx com {"erro":"mensagem"})
+   POST   /api/login                  {email,senha,tipo}      -> {id,nome,email,tipo}
+   GET    /api/produtos                                       -> [{id,nome,preco,estoque}]
+   POST   /api/produtos               {nome,preco,estoque}    -> produto
+   PUT    /api/produtos/{id}          {nome,preco,estoque}    -> produto
+   DELETE /api/produtos/{id}
+   POST   /api/produtos/{id}/estoque  {quantidade}            -> produto
+   GET    /api/clientes                                       -> [{id,nome,email,pedidos}]
+   POST   /api/clientes               {nome,email,senha}      -> {id,nome,email,tipo}
+   PUT    /api/clientes/{id}          {nome,email,senha?}     -> cliente
+   DELETE /api/clientes/{id}
+   GET    /api/pedidos?clienteId=     (clienteId opcional)    -> [pedido]
+   POST   /api/pedidos                {clienteId,itens:[{produtoId,quantidade}]} -> pedido
+   PUT    /api/pedidos/{id}/status    {status}  ("Concluído" ou "Cancelado")     -> pedido
+   DELETE /api/pedidos/{id}           (só pedido Cancelado)
+   pedido = {id,clienteId,clienteNome,data,status,total,
+             itens:[{produtoId,nome,preco,quantidade}]}
+   ===================================================================== */
+
+const $ = (s, r = document) => r.querySelector(s);
+const brl = v => Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+/* o C# manda a data com 7 casas de fração (…:11.1234567); alguns navegadores só leem até 3 */
+const dataBr = iso => new Date(String(iso).replace(/(\.\d{3})\d+/, '$1')).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const porId = (lista, id) => lista.find(x => String(x.id) === String(id));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* sem armazenamento: segue na memória */ } },
+  del(k) { try { localStorage.removeItem(k); } catch { } }
+};
+const ESTOQUE_BAIXO = 5;
+
+/* ---------------------------------------------------------------
+   MODO DEMONSTRAÇÃO: imita o que o servidor C# vai fazer
+   --------------------------------------------------------------- */
+function seed() {
+  const agora = Date.now(), h = 3600e3;
+  const produtos = [
+    { id: 1, nome: 'Café em grão 500g', preco: 24.9, estoque: 18 },
+    { id: 2, nome: 'Pão de queijo congelado 1kg', preco: 32, estoque: 3 },
+    { id: 3, nome: 'Mel silvestre 300g', preco: 28.5, estoque: 9 },
+    { id: 4, nome: 'Geleia de morango 250g', preco: 16.9, estoque: 12 },
+    { id: 5, nome: 'Biscoito de polvilho 100g', preco: 7.5, estoque: 40 },
+    { id: 6, nome: 'Suco integral de uva 1L', preco: 14, estoque: 0 }
+  ];
+  const usuarios = [
+    { id: 1, tipo: 'gestor', nome: 'Marina Gestora', email: 'gestor@outlook.com', senha: 'gestor123' },
+    { id: 2, tipo: 'cliente', nome: 'Carlos Souza', email: 'cliente@gmail.com', senha: 'cliente1' },
+    { id: 3, tipo: 'cliente', nome: 'Ana Lima', email: 'ana@hotmail.com', senha: 'ana12345' }
+  ];
+  const it = (id, q) => { const p = produtos.find(x => x.id === id); return { produtoId: id, nome: p.nome, preco: p.preco, quantidade: q }; };
+  const pedidos = [
+    { id: 1, clienteId: 2, data: new Date(agora - 30 * h).toISOString(), status: 'Concluído', itens: [it(1, 2), it(3, 1)] },
+    { id: 2, clienteId: 3, data: new Date(agora - 5 * h).toISOString(), status: 'Pendente', itens: [it(2, 1), it(5, 3)] },
+    { id: 3, clienteId: 2, data: new Date(agora - 52 * h).toISOString(), status: 'Cancelado', itens: [it(4, 2)] }
+  ];
+  return { produtos, usuarios, pedidos };
+}
+
+const Demo = (() => {
+  let db = store.get('balcao.db', null) || seed();
+  const save = () => store.set('balcao.db', db);
+  const fail = m => { throw new Error(m); };
+  const nid = l => l.reduce((m, x) => Math.max(m, x.id), 0) + 1;
+  const pub = u => ({ id: u.id, nome: u.nome, email: u.email, tipo: u.tipo });
+  const pedView = p => ({ ...p, clienteNome: porId(db.usuarios, p.clienteId)?.nome || 'Cliente removido', total: p.itens.reduce((s, i) => s + i.preco * i.quantidade, 0) });
+  const clean = s => String(s || '').replace(/\s+/g, ' ').trim();
+
+  const checarProduto = d => {
+    if (!clean(d.nome)) fail('Informe o nome do produto.');
+    if (!(d.preco >= 0)) fail('Informe um preço válido (zero ou maior).');
+    if (!Number.isInteger(d.estoque) || d.estoque < 0) fail('O estoque precisa ser um número inteiro, zero ou maior.');
+  };
+  const checarUsuario = (d, { id = null, senhaOpcional = false } = {}) => {
+    const nome = clean(d.nome), email = String(d.email || '').replace(/\s/g, '').toLowerCase();
+    if (!nome) fail('Informe o nome.');
+    if (!/^[^\s@]+@(gmail|hotmail|outlook|yahoo)\.com$/.test(email)) fail('Use um e-mail @gmail.com, @hotmail.com, @outlook.com ou @yahoo.com.');
+    if (db.usuarios.some(u => u.email === email && u.id !== id)) fail('Já existe uma conta com este e-mail.');
+    const temSenha = d.senha && d.senha.length > 0;
+    if (!(senhaOpcional && !temSenha) && !(d.senha.length >= 6 && d.senha.length <= 10)) fail('A senha precisa ter de 6 a 10 caracteres.');
+    return { nome: nome[0].toUpperCase() + nome.slice(1), email };
+  };
+
+  return {
+    modo: 'demo',
+    resetar() { store.del('balcao.db'); },
+    async login({ email, senha, tipo }) {
+      const u = db.usuarios.find(x => x.tipo === tipo && x.email === String(email).replace(/\s/g, '').toLowerCase());
+      if (!u || u.senha !== senha) fail('E-mail ou senha incorretos.');
+      return pub(u);
+    },
+    async cadastrar(d) { return this.clientes.criar(d); },
+    produtos: {
+      async listar() { return db.produtos.map(p => ({ ...p })); },
+      async criar(d) { checarProduto(d); const p = { id: nid(db.produtos), nome: clean(d.nome), preco: d.preco, estoque: d.estoque }; db.produtos.push(p); save(); return { ...p }; },
+      async atualizar(id, d) { const p = porId(db.produtos, id) || fail('Produto não encontrado.'); checarProduto(d); Object.assign(p, { nome: clean(d.nome), preco: d.preco, estoque: d.estoque }); save(); return { ...p }; },
+      async excluir(id) {
+        const p = porId(db.produtos, id) || fail('Produto não encontrado.');
+        if (db.pedidos.some(x => x.itens.some(i => i.produtoId === p.id))) fail('Este produto aparece em pedidos e não pode ser excluído. Zere o estoque para tirá-lo da venda.');
+        db.produtos = db.produtos.filter(x => x !== p); save();
+      },
+      async estocar(id, quantidade) {
+        const p = porId(db.produtos, id) || fail('Produto não encontrado.');
+        if (!Number.isInteger(quantidade) || quantidade <= 0) fail('A quantidade a adicionar precisa ser maior que zero.');
+        p.estoque += quantidade; save(); return { ...p };
+      }
+    },
+    clientes: {
+      async listar() { return db.usuarios.filter(u => u.tipo === 'cliente').map(u => ({ ...pub(u), pedidos: db.pedidos.filter(p => p.clienteId === u.id).length })); },
+      async criar(d) { const v = checarUsuario(d); const u = { id: nid(db.usuarios), tipo: 'cliente', ...v, senha: d.senha }; db.usuarios.push(u); save(); return pub(u); },
+      async atualizar(id, d) {
+        const u = porId(db.usuarios.filter(x => x.tipo === 'cliente'), id) || fail('Cliente não encontrado.');
+        const v = checarUsuario(d, { id: u.id, senhaOpcional: true }); Object.assign(u, v); if (d.senha) u.senha = d.senha; save(); return pub(u);
+      },
+      async excluir(id) {
+        const u = porId(db.usuarios.filter(x => x.tipo === 'cliente'), id) || fail('Cliente não encontrado.');
+        if (db.pedidos.some(p => p.clienteId === u.id)) fail('Este cliente tem pedidos registrados e não pode ser excluído.');
+        db.usuarios = db.usuarios.filter(x => x !== u); save();
+      }
+    },
+    pedidos: {
+      async listar({ clienteId } = {}) {
+        return db.pedidos.filter(p => clienteId == null || String(p.clienteId) === String(clienteId)).map(pedView).sort((a, b) => b.id - a.id);
+      },
+      async criar({ clienteId, itens }) {
+        if (!itens || !itens.length) fail('O carrinho está vazio.');
+        const linhas = itens.map(i => {
+          const p = porId(db.produtos, i.produtoId) || fail('Um produto do carrinho não existe mais.');
+          if (!(i.quantidade >= 1)) fail('Quantidade inválida.');
+          if (p.estoque < i.quantidade) fail(`Estoque insuficiente de ${p.nome}: restam ${p.estoque}.`);
+          return { p, q: i.quantidade };
+        });
+        linhas.forEach(({ p, q }) => { p.estoque -= q; });
+        const ped = { id: nid(db.pedidos), clienteId, data: new Date().toISOString(), status: 'Pendente', itens: linhas.map(({ p, q }) => ({ produtoId: p.id, nome: p.nome, preco: p.preco, quantidade: q })) };
+        db.pedidos.push(ped); save(); return pedView(ped);
+      },
+      async status(id, status) {
+        const p = porId(db.pedidos, id) || fail('Pedido não encontrado.');
+        if (p.status !== 'Pendente') fail(`Pedido ${p.status.toLowerCase()} não pode mudar de status.`);
+        if (!['Concluído', 'Cancelado'].includes(status)) fail('Status inválido.');
+        if (status === 'Cancelado') p.itens.forEach(i => { const pr = porId(db.produtos, i.produtoId); if (pr) pr.estoque += i.quantidade; });
+        p.status = status; save(); return pedView(p);
+      },
+      async excluir(id) {
+        const p = porId(db.pedidos, id) || fail('Pedido não encontrado.');
+        if (p.status !== 'Cancelado') fail('Só dá para excluir pedidos cancelados.');
+        db.pedidos = db.pedidos.filter(x => x !== p); save();
+      }
+    }
+  };
+})();
+
+/* ---------------------------------------------------------------
+   API DE VERDADE: fala com o servidor C#
+   --------------------------------------------------------------- */
+const Remote = (() => {
+  const call = async (metodo, url, corpo) => {
+    const r = await fetch('/api' + url, { method: metodo, headers: { 'Content-Type': 'application/json' }, body: corpo ? JSON.stringify(corpo) : undefined });
+    const txt = await r.text(); let dados = null;
+    try { dados = txt ? JSON.parse(txt) : null; } catch { /* resposta sem JSON */ }
+    if (!r.ok) throw new Error(dados?.erro || `Erro ${r.status} ao falar com o servidor.`);
+    return dados;
+  };
+  return {
+    modo: 'api',
+    login: d => call('POST', '/login', d),
+    cadastrar: d => call('POST', '/clientes', d),
+    produtos: {
+      listar: () => call('GET', '/produtos'),
+      criar: d => call('POST', '/produtos', d),
+      atualizar: (id, d) => call('PUT', `/produtos/${id}`, d),
+      excluir: id => call('DELETE', `/produtos/${id}`),
+      estocar: (id, quantidade) => call('POST', `/produtos/${id}/estoque`, { quantidade })
+    },
+    clientes: {
+      listar: () => call('GET', '/clientes'),
+      criar: d => call('POST', '/clientes', d),
+      atualizar: (id, d) => call('PUT', `/clientes/${id}`, d),
+      excluir: id => call('DELETE', `/clientes/${id}`)
+    },
+    pedidos: {
+      listar: ({ clienteId } = {}) => call('GET', '/pedidos' + (clienteId != null ? `?clienteId=${clienteId}` : '')),
+      criar: d => call('POST', '/pedidos', d),
+      status: (id, status) => call('PUT', `/pedidos/${id}/status`, { status }),
+      excluir: id => call('DELETE', `/pedidos/${id}`)
+    }
+  };
+})();
+
+async function servidorDisponivel() {
+  if (location.protocol === 'file:') return false;
+  try {
+    const c = new AbortController(); const t = setTimeout(() => c.abort(), 1200);
+    const r = await fetch('/api/ping', { signal: c.signal }); clearTimeout(t); return r.ok;
+  } catch { return false; }
+}
+
+/* ---------------------------------------------------------------
+   ESTADO E UTILITÁRIOS DE TELA
+   --------------------------------------------------------------- */
+let api = Demo;
+const kSessao = () => 'balcao.sessao.' + api.modo;
+const kCarrinho = id => 'balcao.carrinho.' + api.modo + '.' + id;
+const state = { user: null, view: 'loja', produtos: [], pedidos: [], clientes: [], carrinho: [], busca: '', auth: { tipo: 'cliente', aba: 'entrar' } };
+
+let tToast;
+function toast(msg, tipo = 'ok') {
+  const t = $('#toast'); t.textContent = msg; t.className = 'toast show ' + (tipo === 'erro' ? 'erro' : '');
+  clearTimeout(tToast); tToast = setTimeout(() => { t.className = 'toast'; }, 4000);
+}
+async function tentar(fn) { try { return await fn(); } catch (e) { toast(e.message || 'Algo deu errado.', 'erro'); } }
+
+async function carregar() {
+  const u = state.user;
+  if (u.tipo === 'cliente') {
+    [state.produtos, state.pedidos] = await Promise.all([api.produtos.listar(), api.pedidos.listar({ clienteId: u.id })]);
+  } else {
+    [state.produtos, state.pedidos, state.clientes] = await Promise.all([api.produtos.listar(), api.pedidos.listar(), api.clientes.listar()]);
+  }
+}
+async function recarregar() { await carregar(); renderConteudo(); atualizarCarrinho(); }
+
+function chipStatus(s) { return `<span class="chip ${s === 'Concluído' ? 'ok' : s === 'Cancelado' ? 'alerta' : 'aviso'}">${esc(s)}</span>`; }
+const num = v => { const n = parseFloat(String(v).replace(',', '.')); return Number.isNaN(n) ? NaN : n; };
+
+/* ---------------------------------------------------------------
+   MODAIS (formulário e confirmação)
+   --------------------------------------------------------------- */
+function formModal({ titulo, campos, valores = {}, botao = 'Salvar', enviar }) {
+  const m = $('#modal');
+  m.innerHTML = `<form class="m-form" novalidate>
+    <h2>${esc(titulo)}</h2>
+    ${campos.map(c => `<label class="campo"><span>${esc(c.label)}</span>
+      <input name="${c.name}" type="${c.type || 'text'}" value="${esc(valores[c.name] ?? '')}" ${c.attrs || ''} autocomplete="off">
+      ${c.ajuda ? `<small>${esc(c.ajuda)}</small>` : ''}</label>`).join('')}
+    <p class="erro" role="alert" hidden></p>
+    <div class="m-acoes"><button type="button" class="btn sec" data-fechar>Cancelar</button><button class="btn" type="submit">${esc(botao)}</button></div>
+  </form>`;
+  const f = m.querySelector('form');
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const bt = f.querySelector('[type=submit]'); bt.disabled = true;
+    try { await enviar(Object.fromEntries(new FormData(f))); m.close(); }
+    catch (e) { const p = f.querySelector('.erro'); p.textContent = e.message; p.hidden = false; bt.disabled = false; }
+  });
+  m.showModal(); f.querySelector('input')?.focus();
+}
+function confirmar({ titulo, texto, botao, perigo = true, fazer }) {
+  const m = $('#modal');
+  m.innerHTML = `<form class="m-form"><h2>${esc(titulo)}</h2><p class="texto">${esc(texto)}</p>
+    <div class="m-acoes"><button type="button" class="btn sec" data-fechar>Voltar</button><button class="btn ${perigo ? 'perigo' : ''}" type="submit">${esc(botao)}</button></div></form>`;
+  m.querySelector('form').addEventListener('submit', async ev => { ev.preventDefault(); m.close(); await tentar(fazer); });
+  m.showModal(); m.querySelector('[type=submit]').focus();
+}
+
+/* ---------------------------------------------------------------
+   LOGIN
+   --------------------------------------------------------------- */
+function renderAuth() {
+  state.user = null;
+  $('#app').innerHTML = `<main class="auth">
+    <section class="auth-hero">
+      <div class="logo logo-grande" role="img" aria-label="Logo de uma loja"></div>
+      <h1>Meu Comércio</h1>
+      <p>Sistema de gestão para pequenas lojas.</p>
+    </section>
+    <section class="auth-form"><div class="auth-caixa">
+      <h2>Acesse sua conta</h2>
+      <div class="segmento" role="group" aria-label="Tipo de acesso">
+        <button type="button" data-action="auth-tipo" data-tipo="cliente" aria-pressed="${state.auth.tipo === 'cliente'}">Sou cliente</button>
+        <button type="button" data-action="auth-tipo" data-tipo="gestor" aria-pressed="${state.auth.tipo === 'gestor'}">Sou gestor</button>
+      </div>
+      <div id="auth-corpo"></div>
+      ${api.modo === 'demo' ? `<div class="demo-info"><p><strong>Modo demonstração.</strong> Os dados ficam só neste navegador.</p>
+        <p>Gestor: gestor@outlook.com / gestor123</p><p>Cliente: cliente@gmail.com / cliente1</p></div>` : ''}
+    </div></section></main>`;
+  renderAuthCorpo();
+}
+function renderAuthCorpo() {
+  const { tipo, aba } = state.auth, cad = tipo === 'cliente' && aba === 'cadastro';
+  $('#auth-corpo').innerHTML = `
+    ${tipo === 'cliente' ? `<div class="abas" role="tablist">
+      <button role="tab" type="button" data-action="auth-aba" data-aba="entrar" aria-selected="${aba === 'entrar'}">Entrar</button>
+      <button role="tab" type="button" data-action="auth-aba" data-aba="cadastro" aria-selected="${aba === 'cadastro'}">Criar conta</button></div>` : ''}
+    <form id="form-auth" novalidate>
+      ${cad ? `<label class="campo"><span>Nome</span><input name="nome" autocomplete="name"></label>` : ''}
+      <label class="campo"><span>E-mail</span><input name="email" type="email" autocomplete="email"></label>
+      <label class="campo"><span>Senha</span><input name="senha" type="password" autocomplete="${cad ? 'new-password' : 'current-password'}">
+        ${cad ? '<small>De 6 a 10 caracteres.</small>' : ''}</label>
+      <p class="erro" role="alert" hidden></p>
+      <button class="btn" style="width:100%" type="submit">${cad ? 'Criar conta' : 'Entrar'}</button>
+    </form>`;
+}
+async function enviarAuth(form) {
+  const v = Object.fromEntries(new FormData(form)), erro = form.querySelector('.erro');
+  erro.hidden = true;
+  try {
+    const cad = state.auth.tipo === 'cliente' && state.auth.aba === 'cadastro';
+    const u = cad ? await api.cadastrar({ nome: v.nome, email: v.email, senha: v.senha }) : await api.login({ email: v.email, senha: v.senha, tipo: state.auth.tipo });
+    iniciarSessao({ id: u.id, nome: u.nome, email: u.email, tipo: u.tipo || state.auth.tipo });
+  } catch (e) { erro.textContent = e.message; erro.hidden = false; }
+}
+async function iniciarSessao(u) {
+  state.user = u; store.set(kSessao(), u);
+  state.carrinho = u.tipo === 'cliente' ? store.get(kCarrinho(u.id), []) : [];
+  state.view = u.tipo === 'gestor' ? 'painel' : 'loja'; state.busca = '';
+  try { await carregar(); renderShell(); } catch (e) { renderAuth(); toast(e.message, 'erro'); }
+}
+function sair() { store.del(kSessao()); state.user = null; renderAuth(); }
+
+/* ---------------------------------------------------------------
+   CASCAS (cliente e gestor)
+   --------------------------------------------------------------- */
+function renderShell() {
+  const u = state.user;
+  if (u.tipo === 'cliente') {
+    $('#app').innerHTML = `<header class="topo">
+        <div class="marca">Meu Comércio</div>
+        <nav aria-label="Principal"><button data-action="ver" data-view="loja">Loja</button><button data-action="ver" data-view="pedidos">Meus pedidos</button></nav>
+        <div class="topo-dir">
+          <button class="btn sec" data-action="abrir-carrinho">Carrinho <span class="contador" id="contador">0</span></button>
+          <span>Olá, ${esc(u.nome.split(' ')[0])}</span>
+          <button class="btn sec peq" data-action="sair">Sair</button>
+        </div></header>
+      <main id="conteudo" class="pagina"></main>
+      <dialog id="gaveta" class="gaveta" aria-label="Carrinho"><div class="g-topo"><h2>Carrinho</h2><button class="btn sec peq" data-fechar>Fechar</button></div><div id="g-corpo"></div></dialog>`;
+  } else {
+    $('#app').innerHTML = `<div class="gestor"><aside class="lateral">
+        <div class="marca">Meu Comércio</div>
+        <nav aria-label="Principal">
+          <button data-action="ver" data-view="painel">Painel geral</button><button data-action="ver" data-view="produtos">Produtos</button>
+          <button data-action="ver" data-view="pedidos">Pedidos</button><button data-action="ver" data-view="clientes">Clientes</button></nav>
+        <div class="rodape">
+          ${api.modo === 'demo' ? `<div class="modo-demo">Modo demonstração: dados salvos só neste navegador.</div>` : ''}
+          <div class="quem"><strong>${esc(u.nome)}</strong>Gestor</div>
+          ${api.modo === 'demo' ? `<button class="btn peq" data-action="resetar-demo">Restaurar dados de exemplo</button>` : ''}
+          <button class="btn peq" data-action="sair">Sair</button>
+        </div></aside><main id="conteudo" class="pagina"></main></div>`;
+  }
+  renderConteudo(); atualizarCarrinho();
+}
+
+function renderConteudo() {
+  const c = $('#conteudo'); if (!c || !state.user) return;
+  const v = VIEWS[state.user.tipo][state.view]; c.innerHTML = v();
+  document.querySelectorAll('[data-view]').forEach(b => { if (b.dataset.view === state.view) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+}
+function atualizarLista() { const l = $('#lista'); if (l) l.innerHTML = LISTAS[state.user.tipo + ':' + state.view](); }
+
+/* ---------------------------------------------------------------
+   TELAS DO CLIENTE
+   --------------------------------------------------------------- */
+function htmlLoja() {
+  const q = state.busca.trim().toLowerCase();
+  const lista = state.produtos.filter(p => p.nome.toLowerCase().includes(q));
+  if (!state.produtos.length) return `<div class="vazio"><strong>A loja ainda não tem produtos.</strong>Volte em breve.</div>`;
+  if (!lista.length) return `<div class="vazio"><strong>Nada encontrado para "${esc(state.busca)}".</strong>Tente outro nome.</div>`;
+  return `<div class="grade">${lista.map(p => {
+    const esg = p.estoque <= 0;
+    const nota = esg ? `<p class="nota zero">Esgotado</p>` : p.estoque <= ESTOQUE_BAIXO ? `<p class="nota baixo">Restam ${p.estoque}</p>` : `<p class="nota">${p.estoque} disponíveis</p>`;
+    return `<article class="tag ${esg ? 'esgotado' : ''}"><h3>${esc(p.nome)}</h3>${nota}
+      <div class="faixa"><span class="preco">${brl(p.preco)}</span><button class="btn peq" data-action="add" data-id="${p.id}" ${esg ? 'disabled' : ''}>Adicionar</button></div></article>`;
+  }).join('')}</div>`;
+}
+function htmlPedidosCliente() {
+  if (!state.pedidos.length) return `<div class="vazio"><strong>Você ainda não fez pedidos.</strong>Escolha produtos na loja e finalize o carrinho.</div>`;
+  return state.pedidos.map(p => `<article class="pedido">
+    <div class="pedido-topo"><h3>Pedido ${p.id}</h3><span>${dataBr(p.data)} ${chipStatus(p.status)}</span></div>
+    <ul>${p.itens.map(i => `<li><span>${i.quantidade} × ${esc(i.nome)}</span><span>${brl(i.preco * i.quantidade)}</span></li>`).join('')}</ul>
+    <div class="pedido-rodape"><span class="total">${brl(p.total)}</span>
+      ${p.status === 'Pendente' ? `<button class="btn perigo peq" data-action="cliente-cancelar" data-id="${p.id}">Cancelar pedido</button>` : ''}</div></article>`).join('');
+}
+
+/* carrinho */
+const itensCarrinho = () => state.carrinho.map(i => { const p = porId(state.produtos, i.produtoId); return p ? { ...i, produto: p } : null; }).filter(Boolean);
+const totalCarrinho = () => itensCarrinho().reduce((s, i) => s + i.produto.preco * i.quantidade, 0);
+function salvarCarrinho() { store.set(kCarrinho(state.user.id), state.carrinho); atualizarCarrinho(); }
+function atualizarCarrinho() {
+  if (state.user?.tipo !== 'cliente') return;
+  const itens = itensCarrinho();
+  const cont = $('#contador'); if (cont) cont.textContent = itens.reduce((s, i) => s + i.quantidade, 0);
+  const corpo = $('#g-corpo'); if (!corpo) return;
+  corpo.innerHTML = !itens.length
+    ? `<div class="vazio"><strong>Seu carrinho está vazio.</strong>Escolha produtos na loja.</div>`
+    : `${itens.map(i => `<div class="item-carrinho"><strong>${esc(i.produto.nome)}</strong><span>${brl(i.produto.preco * i.quantidade)}</span>
+        <div class="qtd"><button aria-label="Diminuir" data-action="qtd" data-id="${i.produto.id}" data-delta="-1">−</button><span>${i.quantidade}</span><button aria-label="Aumentar" data-action="qtd" data-id="${i.produto.id}" data-delta="1">+</button></div>
+        <button class="btn sec peq" data-action="remover" data-id="${i.produto.id}">Remover</button></div>`).join('')}
+      <div class="g-rodape"><div class="linha-total"><span>Total</span><span class="total">${brl(totalCarrinho())}</span></div>
+      <button class="btn" data-action="finalizar">Finalizar pedido</button></div>`;
+}
+
+/* ---------------------------------------------------------------
+   TELAS DO GESTOR
+   --------------------------------------------------------------- */
+function htmlPainel() {
+  const vendido = state.pedidos.filter(p => p.status === 'Concluído').reduce((t, p) => t + p.total, 0);
+  const pend = state.pedidos.filter(p => p.status === 'Pendente').length;
+  const repor = state.produtos.filter(p => p.estoque <= ESTOQUE_BAIXO).length;
+  const atalho = (view, titulo, texto, info) => `<article class="atalho"><h3>${titulo}</h3><p>${texto}</p><p class="info">${info}</p>
+      <button class="btn sec peq" data-action="ver" data-view="${view}">Abrir ${titulo.toLowerCase()}</button></article>`;
+  return `<div class="pagina-topo"><h1>Painel geral</h1></div>
+  <div class="resumo">
+    <div><span class="valor">${brl(vendido)}</span><span class="rotulo">em pedidos concluídos</span></div>
+    <div><span class="valor">${pend}</span><span class="rotulo">pedidos para atender</span></div>
+    <div><span class="valor">${repor}</span><span class="rotulo">produtos para repor</span></div>
+  </div>
+  <div class="atalhos">
+    ${atalho('produtos', 'Produtos', 'Cadastre, edite, reponha o estoque e exclua produtos.', `${state.produtos.length} cadastrados`)}
+    ${atalho('pedidos', 'Pedidos', 'Crie pedidos, conclua, cancele e exclua os cancelados.', `${pend} esperando atendimento`)}
+    ${atalho('clientes', 'Clientes', 'Gerencie as contas de quem compra na loja.', `${state.clientes.length} cadastrados`)}
+  </div>
+  <section class="bloco"><div class="pagina-topo"><h2>Produtos</h2><button class="btn" data-action="prod-novo">Novo produto</button></div>${tabelaProdutos()}</section>
+  <section class="bloco"><div class="pagina-topo"><h2>Pedidos</h2><button class="btn" data-action="ped-novo">Novo pedido</button></div>${tabelaPedidos()}</section>`;
+}
+const chipEstoque = p => p.estoque <= 0 ? `<span class="chip alerta">Esgotado</span>` : p.estoque <= ESTOQUE_BAIXO ? `<span class="chip aviso">${p.estoque} restantes</span>` : `<span class="num">${p.estoque}</span>`;
+
+function htmlProdutos() {
+  return `<div class="pagina-topo"><h1>Produtos</h1><div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input id="busca" class="busca" type="search" placeholder="Buscar produto" aria-label="Buscar produto" value="${esc(state.busca)}">
+    <button class="btn" data-action="prod-novo">Novo produto</button></div></div><div id="lista">${tabelaProdutos()}</div>`;
+}
+function tabelaProdutos() {
+  const q = state.busca.trim().toLowerCase(), l = state.produtos.filter(p => p.nome.toLowerCase().includes(q));
+  if (!state.produtos.length) return `<div class="vazio"><strong>Nenhum produto cadastrado.</strong>Use "Novo produto" para começar.</div>`;
+  if (!l.length) return `<div class="vazio"><strong>Nada encontrado para "${esc(state.busca)}".</strong></div>`;
+  return `<div class="tabela-wrap"><table><thead><tr><th>Produto</th><th class="num">Preço</th><th>Estoque</th><th></th></tr></thead><tbody>${l.map(p => `<tr>
+    <td><strong>${esc(p.nome)}</strong></td><td class="num">${brl(p.preco)}</td><td>${chipEstoque(p)}</td>
+    <td><div class="acoes"><button class="btn sec peq" data-action="prod-estocar" data-id="${p.id}">Estocar</button>
+    <button class="btn sec peq" data-action="prod-editar" data-id="${p.id}">Editar</button>
+    <button class="btn perigo peq" data-action="prod-excluir" data-id="${p.id}">Excluir</button></div></td></tr>`).join('')}</tbody></table></div>`;
+}
+
+function tabelaPedidos() {
+  if (!state.pedidos.length) return `<div class="vazio"><strong>Nenhum pedido ainda.</strong>Use "Novo pedido" ou aguarde os pedidos dos clientes.</div>`;
+  return `<div class="tabela-wrap"><table>
+    <thead><tr><th>Pedido</th><th>Cliente</th><th>Itens</th><th class="num">Total</th><th>Status</th><th></th></tr></thead><tbody>${state.pedidos.map(p => `<tr>
+    <td><strong>${p.id}</strong><br><span class="itens-resumo">${dataBr(p.data)}</span></td><td>${esc(p.clienteNome)}</td>
+    <td class="itens-resumo">${p.itens.map(i => `${i.quantidade} × ${esc(i.nome)}`).join(', ')}</td>
+    <td class="num">${brl(p.total)}</td><td>${chipStatus(p.status)}</td>
+    <td><div class="acoes">${p.status === 'Pendente'
+      ? `<button class="btn peq" data-action="ped-status" data-id="${p.id}" data-status="Concluído">Concluir</button><button class="btn perigo peq" data-action="ped-status" data-id="${p.id}" data-status="Cancelado">Cancelar</button>`
+      : p.status === 'Cancelado' ? `<button class="btn perigo peq" data-action="ped-excluir" data-id="${p.id}">Excluir</button>` : ''}</div></td></tr>`).join('')}</tbody></table></div>`;
+}
+function htmlPedidosGestor() {
+  return `<div class="pagina-topo"><h1>Pedidos</h1><button class="btn" data-action="ped-novo">Novo pedido</button></div>${tabelaPedidos()}`;
+}
+
+function htmlClientes() {
+  return `<div class="pagina-topo"><h1>Clientes</h1><button class="btn" data-action="cli-novo">Novo cliente</button></div>
+  ${!state.clientes.length ? `<div class="vazio"><strong>Nenhum cliente cadastrado.</strong>Clientes também podem criar a própria conta na tela de entrada.</div>`
+    : `<div class="tabela-wrap"><table><thead><tr><th>Nome</th><th>E-mail</th><th class="num">Pedidos</th><th></th></tr></thead><tbody>${state.clientes.map(c => `<tr>
+    <td><strong>${esc(c.nome)}</strong></td><td>${esc(c.email)}</td><td class="num">${c.pedidos}</td>
+    <td><div class="acoes"><button class="btn sec peq" data-action="cli-editar" data-id="${c.id}">Editar</button>
+    <button class="btn perigo peq" data-action="cli-excluir" data-id="${c.id}">Excluir</button></div></td></tr>`).join('')}</tbody></table></div>`}`;
+}
+
+const VIEWS = {
+  cliente: {
+    loja: () => `<div class="pagina-topo"><h1>Loja</h1><input id="busca" class="busca" type="search" placeholder="Buscar produto" aria-label="Buscar produto" value="${esc(state.busca)}"></div><div id="lista">${htmlLoja()}</div>`,
+    pedidos: () => `<div class="pagina-topo"><h1>Meus pedidos</h1></div>${htmlPedidosCliente()}`
+  },
+  gestor: { painel: htmlPainel, produtos: htmlProdutos, pedidos: htmlPedidosGestor, clientes: htmlClientes }
+};
+const LISTAS = { 'cliente:loja': htmlLoja, 'gestor:produtos': tabelaProdutos };
+
+/* ---------------------------------------------------------------
+   AÇÕES (cliques)
+   --------------------------------------------------------------- */
+/* o gestor registra um pedido em nome de um cliente (venda no balcão) */
+function novoPedido() {
+  const vendaveis = state.produtos.filter(p => p.estoque > 0);
+  if (!state.clientes.length) return toast('Cadastre um cliente antes de criar um pedido.', 'erro');
+  if (!vendaveis.length) return toast('Nenhum produto com estoque para vender.', 'erro');
+  const m = $('#modal');
+  const opcoes = vendaveis.map(p => `<option value="${esc(p.id)}">${esc(p.nome)} - ${brl(p.preco)} (${p.estoque} em estoque)</option>`).join('');
+  const linha = () => `<div class="linha-item"><select aria-label="Produto">${opcoes}</select><input type="number" min="1" step="1" value="1" aria-label="Quantidade"><button type="button" class="btn sec peq" data-rem>Remover</button></div>`;
+  m.innerHTML = `<form class="m-form" novalidate><h2>Novo pedido</h2>
+    <label class="campo"><span>Cliente</span><select name="cliente">${state.clientes.map(c => `<option value="${esc(c.id)}">${esc(c.nome)}</option>`).join('')}</select></label>
+    <div class="campo"><span>Itens</span><div id="linhas">${linha()}</div><button type="button" class="btn sec peq" data-add style="justify-self:start">Adicionar item</button></div>
+    <p class="erro" role="alert" hidden></p>
+    <div class="m-acoes"><button type="button" class="btn sec" data-fechar>Cancelar</button><button class="btn" type="submit">Criar pedido</button></div></form>`;
+  const f = m.querySelector('form'), linhas = f.querySelector('#linhas');
+  f.addEventListener('click', e => {
+    if (e.target.closest('[data-add]')) linhas.insertAdjacentHTML('beforeend', linha());
+    const rem = e.target.closest('[data-rem]');
+    if (rem && linhas.children.length > 1) rem.closest('.linha-item').remove();
+  });
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const bt = f.querySelector('[type=submit]'), erro = f.querySelector('.erro'); bt.disabled = true; erro.hidden = true;
+    try {
+      const cliente = porId(state.clientes, f.elements.cliente.value), somados = new Map();
+      linhas.querySelectorAll('.linha-item').forEach(l => {
+        const p = porId(vendaveis, l.querySelector('select').value), q = Number(l.querySelector('input').value);
+        somados.set(p.id, (somados.get(p.id) || 0) + q);
+      });
+      const ped = await api.pedidos.criar({ clienteId: cliente.id, itens: [...somados].map(([produtoId, quantidade]) => ({ produtoId, quantidade })) });
+      m.close(); await recarregar(); toast(`Pedido ${ped.id} criado.`);
+    } catch (e) { erro.textContent = e.message; erro.hidden = false; bt.disabled = false; }
+  });
+  m.showModal(); f.elements.cliente.focus();
+}
+
+const camposProduto = [
+  { name: 'nome', label: 'Nome do produto', attrs: 'required maxlength="80"' },
+  { name: 'preco', label: 'Preço (R$)', type: 'number', attrs: 'min="0" step="0.01" required' },
+  { name: 'estoque', label: 'Estoque (unidades)', type: 'number', attrs: 'min="0" step="1" required' }
+];
+const lerProduto = v => ({ nome: v.nome, preco: num(v.preco), estoque: v.estoque === '' ? NaN : Number(v.estoque) });
+
+const acoes = {
+  'auth-tipo': d => { state.auth.tipo = d.tipo; if (d.tipo === 'gestor') state.auth.aba = 'entrar'; renderAuth(); },
+  'auth-aba': d => { state.auth.aba = d.aba; renderAuthCorpo(); },
+  sair,
+  'resetar-demo': () => confirmar({ titulo: 'Restaurar dados de exemplo?', texto: 'Produtos, clientes e pedidos criados por você neste navegador serão apagados.', botao: 'Restaurar', fazer: () => { Demo.resetar(); store.del(kSessao()); location.reload(); } }),
+  ver: d => { state.view = d.view; state.busca = ''; renderConteudo(); },
+  'abrir-carrinho': () => { atualizarCarrinho(); $('#gaveta').showModal(); },
+
+  /* cliente */
+  add: d => {
+    const p = porId(state.produtos, d.id); if (!p) return;
+    const item = state.carrinho.find(i => String(i.produtoId) === String(p.id)), atual = item ? item.quantidade : 0;
+    if (atual + 1 > p.estoque) return toast(`Só há ${p.estoque} de ${p.nome} em estoque.`, 'erro');
+    if (item) item.quantidade++; else state.carrinho.push({ produtoId: p.id, quantidade: 1 });
+    salvarCarrinho(); toast(`${p.nome} no carrinho.`);
+  },
+  qtd: d => {
+    const item = state.carrinho.find(i => String(i.produtoId) === String(d.id)), p = porId(state.produtos, d.id); if (!item || !p) return;
+    const nova = item.quantidade + Number(d.delta);
+    if (nova > p.estoque) return toast(`Só há ${p.estoque} de ${p.nome} em estoque.`, 'erro');
+    if (nova < 1) state.carrinho = state.carrinho.filter(i => i !== item); else item.quantidade = nova;
+    salvarCarrinho();
+  },
+  remover: d => { state.carrinho = state.carrinho.filter(i => String(i.produtoId) !== String(d.id)); salvarCarrinho(); },
+  finalizar: () => tentar(async () => {
+    const ped = await api.pedidos.criar({ clienteId: state.user.id, itens: state.carrinho.map(i => ({ produtoId: i.produtoId, quantidade: i.quantidade })) });
+    state.carrinho = []; salvarCarrinho(); $('#gaveta').close(); state.view = 'pedidos';
+    await recarregar(); toast(`Pedido ${ped.id} enviado.`);
+  }),
+  'cliente-cancelar': d => confirmar({ titulo: `Cancelar o pedido ${d.id}?`, texto: 'Os produtos voltam para o estoque.', botao: 'Cancelar pedido', fazer: async () => { await api.pedidos.status(d.id, 'Cancelado'); await recarregar(); toast('Pedido cancelado.'); } }),
+
+  /* gestor: produtos */
+  'prod-novo': () => formModal({ titulo: 'Novo produto', campos: camposProduto, enviar: async v => { await api.produtos.criar(lerProduto(v)); await recarregar(); toast('Produto criado.'); } }),
+  'prod-editar': d => { const p = porId(state.produtos, d.id); formModal({ titulo: 'Editar produto', campos: camposProduto, valores: p, enviar: async v => { await api.produtos.atualizar(p.id, lerProduto(v)); await recarregar(); toast('Produto atualizado.'); } }); },
+  'prod-estocar': d => { const p = porId(state.produtos, d.id); formModal({ titulo: `Adicionar estoque: ${p.nome}`, botao: 'Adicionar', campos: [{ name: 'quantidade', label: 'Quantidade a adicionar', type: 'number', attrs: 'min="1" step="1" required', ajuda: `Estoque atual: ${p.estoque}` }], enviar: async v => { await api.produtos.estocar(p.id, v.quantidade === '' ? NaN : Number(v.quantidade)); await recarregar(); toast('Estoque atualizado.'); } }); },
+  'prod-excluir': d => { const p = porId(state.produtos, d.id); confirmar({ titulo: `Excluir ${p.nome}?`, texto: 'O produto sai da loja. Essa ação não pode ser desfeita.', botao: 'Excluir produto', fazer: async () => { await api.produtos.excluir(p.id); await recarregar(); toast('Produto excluído.'); } }); },
+
+  /* gestor: pedidos */
+  'ped-novo': () => novoPedido(),
+  'ped-status': d => {
+    const cancelar = d.status === 'Cancelado';
+    confirmar({ titulo: `${cancelar ? 'Cancelar' : 'Concluir'} o pedido ${d.id}?`, texto: cancelar ? 'Os produtos voltam para o estoque.' : 'O pedido será marcado como concluído e não poderá mais ser alterado.', botao: cancelar ? 'Cancelar pedido' : 'Concluir pedido', perigo: cancelar,
+      fazer: async () => { await api.pedidos.status(d.id, d.status); await recarregar(); toast(cancelar ? 'Pedido cancelado.' : 'Pedido concluído.'); } });
+  },
+  'ped-excluir': d => confirmar({ titulo: `Excluir o pedido ${d.id}?`, texto: 'O registro do pedido cancelado será apagado.', botao: 'Excluir pedido', fazer: async () => { await api.pedidos.excluir(d.id); await recarregar(); toast('Pedido excluído.'); } }),
+
+  /* gestor: clientes */
+  'cli-novo': () => formModal({ titulo: 'Novo cliente', campos: [
+    { name: 'nome', label: 'Nome', attrs: 'required' }, { name: 'email', label: 'E-mail', type: 'email', attrs: 'required' },
+    { name: 'senha', label: 'Senha', type: 'password', ajuda: 'De 6 a 10 caracteres.', attrs: 'required' }], enviar: async v => { await api.clientes.criar(v); await recarregar(); toast('Cliente criado.'); } }),
+  'cli-editar': d => { const c = porId(state.clientes, d.id); formModal({ titulo: 'Editar cliente', valores: c, campos: [
+    { name: 'nome', label: 'Nome', attrs: 'required' }, { name: 'email', label: 'E-mail', type: 'email', attrs: 'required' },
+    { name: 'senha', label: 'Nova senha', type: 'password', ajuda: 'Deixe em branco para manter a senha atual.' }], enviar: async v => { await api.clientes.atualizar(c.id, v); await recarregar(); toast('Cliente atualizado.'); } }); },
+  'cli-excluir': d => { const c = porId(state.clientes, d.id); confirmar({ titulo: `Excluir ${c.nome}?`, texto: 'A conta do cliente será apagada. Essa ação não pode ser desfeita.', botao: 'Excluir cliente', fazer: async () => { await api.clientes.excluir(c.id); await recarregar(); toast('Cliente excluído.'); } }); }
+};
+
+document.addEventListener('click', e => {
+  const fechar = e.target.closest('[data-fechar]'); if (fechar) return fechar.closest('dialog').close();
+  if (e.target.tagName === 'DIALOG') return e.target.close();
+  const b = e.target.closest('[data-action]'); if (!b) return;
+  const fn = acoes[b.dataset.action]; if (fn) tentar(() => fn(b.dataset, b));
+});
+document.addEventListener('submit', e => { if (e.target.id === 'form-auth') { e.preventDefault(); enviarAuth(e.target); } });
+document.addEventListener('input', e => { if (e.target.id === 'busca') { state.busca = e.target.value; atualizarLista(); } });
+
+/* ---------------------------------------------------------------
+   INÍCIO
+   --------------------------------------------------------------- */
+(async () => {
+  api = (await servidorDisponivel()) ? Remote : Demo;
+  const s = store.get(kSessao(), null);
+  if (s) await iniciarSessao(s); else renderAuth();
+})();
+</script>
+</body>
+</html>
