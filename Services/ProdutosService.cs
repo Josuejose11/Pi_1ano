@@ -4,19 +4,22 @@ namespace Services;
 using Microsoft.EntityFrameworkCore;
 using PI_1ANO.Data;
 public class ProdutoService{
-    // Cadastra o produto
-    public static async Task<Produto> CreateProduto(string nome, decimal preco, int estoque)
+    private readonly ProdutoValidator _validator;
+
+    public ProdutoService(ProdutoValidator validator)
     {
+        _validator = validator;
+    }
+    // Cadastra o produto
+    public async Task<bool> CreateProduto(Produto produto)
+    {
+        if (!_validator.ValidarProduto(produto))
+            return false;
         await using var db = new AppDbContext();
-        var produto = new Produto
-        {
-            Nome = nome,
-            Preco = preco,
-            Estoque = estoque
-        };
         db.Produtos.Add(produto);
+        Console.WriteLine($"Produto de ID: {produto.Id} | Produto: {produto.Nome} adicionado com sucesso");
         await db.SaveChangesAsync();
-        return produto;
+        return true;
     }
     
     // Lista todos os produtos
@@ -44,63 +47,57 @@ public class ProdutoService{
     }
     
     // altera o nome do produto
-    public static async Task AlterarNome(int id, string nome)
+    public async Task<bool> AlterarNome(int id, string nome)
     {
         await using var db = new AppDbContext();
         var produto = await db.Produtos.FindAsync(id);
         if (produto == null)
         {
             Console.WriteLine("Produto não encontrado");
-            return;
+            return false;
         }
-        if (string.IsNullOrEmpty(nome))
-        {
-            Console.WriteLine("O nome não pode ser vazio");
-            return;
-        }
+        if (!_validator.ValidarNome(nome))
+            return false;
         produto.Nome = nome;
         await db.SaveChangesAsync();
         Console.WriteLine($"ID: {id} - Produto: {nome} foi alterado com sucesso");
+        return true;
     }
     
     // Atualiza o preço do produto
-    public static async Task AtualizarPreco(int id, decimal preco)
+    public async Task<bool> AtualizarPreco(int id, decimal preco)
     {
         await using var db = new AppDbContext();
         var produto = await db.Produtos.FindAsync(id);
         if (produto == null)
         {
             Console.WriteLine("Produto não encontrado");
-            return;
+            return false;
         }
-        if (preco <= 0)
-        {
-            Console.WriteLine("O preço não pode negativo ou zero");
-            return;
-        }
+        if (!_validator.ValidarPreco(preco))
+            return false;
         produto.Preco = preco;
         await db.SaveChangesAsync();
         Console.WriteLine($"ID: {id} - Preço: {preco} foi alterado com sucesso");
+        return true;
     }
     
     // Adiciona ao estoque do produto
-    public static async Task Estocar(int id, int entrada)
+    public async Task<bool> Estocar(int id, int entrada)
     {
         await using var db = new AppDbContext();
-        if (entrada <= 0)
-        {
-            Console.WriteLine("No estoque não pode ser aticionado negativo ou zero");
-            return;
-        }
+        if (!_validator.ValidarEstoque(entrada))
+            return false;
         var produto = await db.Produtos.FindAsync(id);
         if (produto == null)
         {
             Console.WriteLine("Produto não encontrado");
-            return;
+            return false;
         }
         produto.Estoque += entrada;
         await db.SaveChangesAsync();
         Console.WriteLine($"ID: {id} - Foi adicionado ao estoque: {entrada} com sucesso");
+        return true;
     }
     
     // Deleta o produto
