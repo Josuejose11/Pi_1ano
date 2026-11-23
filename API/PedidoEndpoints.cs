@@ -77,14 +77,15 @@ public static class PedidoEndpoints
     {
         p.Id,
         p.ClienteId,
-        UsuarioNome = p.Cliente?.Nome ?? "Usuário removido",
-        p.Data,
+        ClienteNome = p.Cliente?.Nome ?? "Usuário removido",
+        Data = p.Data == default ? DateTime.Now : p.Data,
         p.Status,
         Total = p.Itens.Sum(i => i.PrecoUnitario * i.Quantidade),
         Itens = p.Itens.Select(i => new
         {
             i.ProdutoId,
-            i.PrecoUnitario,
+            Nome = i.Produto?.Nome ?? "Produto",
+            Preco = i.PrecoUnitario,
             i.Quantidade
         }).ToList()
     };
