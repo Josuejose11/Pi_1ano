@@ -18,10 +18,12 @@ public static class PedidoEndpoints
 
         // ---------- READ ----------
         rotas.MapGet("/", async (int? clienteId) =>
-        {
-            var lista = await PedidoService.ListarPedidos();
+{
+        var lista = await PedidoService.ListarPedidos();
+        if (clienteId.HasValue)
+            lista = lista.Where(p => p.ClienteId == clienteId.Value).ToList();
 
-            return Results.Ok(lista.Select(Mapear));
+        return Results.Ok(lista.Select(Mapear));
         });
 
         // ---------- CREATE ----------
@@ -41,7 +43,7 @@ public static class PedidoEndpoints
             if (pedido == null)
                 return Resposta.Erro("Não foi possível criar o pedido.");
 
-            return Results.Ok(pedido);
+            return Results.Ok(Mapear(pedido));
         });
 
         // ---------- UPDATE (status) ----------
@@ -50,7 +52,7 @@ public static class PedidoEndpoints
             if (dto.Status == null)
                 return Resposta.Erro("Status inválido.");
 
-            var atualizado = await PedidoService.AtualizarStatus(id);
+            var atualizado = await PedidoService.AtualizarStatus(id, dto.Status);
 
             if (!atualizado)
                 return Resposta.Erro("Não foi possível atualizar o pedido.");
