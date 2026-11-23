@@ -80,22 +80,13 @@ public static class UsuarioValidator
             return false;
         }
 
-        bool letra = senha.Any(c => char.IsLetter(c));
-        bool num = senha.Any(c => char.IsDigit(c));
-        bool carac = senha.Any(c => !char.IsLetterOrDigit(c));
- 
         if (senha.Length > 10 || senha.Length < 6)
         {
             return false;    
         }
            
-           
-        if (!letra || !num || !carac)
-        {      
-            return false;
-        }
-
         return true;
+
     }
 
     // Validacao funcao

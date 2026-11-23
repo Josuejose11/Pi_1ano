@@ -8,27 +8,51 @@ namespace PI_1ANO.Data;
 public static class DbInicial
 {
     
-    public static async Task PrepararAsync(AppDbContext db)
+    
+public static async Task PrepararAsync(AppDbContext db)
+{
+    await db.Database.MigrateAsync();
+
+    // Lista os usuários já cadastrados.
+    var usuarios = await db.Usuarios
+        .Select(u => new { u.Id, u.Email, u.Tipo })
+        .ToListAsync();
+
+    Console.WriteLine("\n--- USUÁRIOS CADASTRADOS ---");
+
+    foreach (var usuario in usuarios)
     {
-        // Aplica as migrations pendentes no banco de dados.
-        await db.Database.MigrateAsync();
-
-        // Verifica se já existe um usuário do tipo gestor.
-        bool existeGestor = await db.Usuarios
-            .AnyAsync(u => u.Tipo == "gestor");
-
-        // Se não existir, cria o gestor inicial.
-        if (!existeGestor)
-        {
-            db.Usuarios.Add(new Usuario(
-                nome: "Josué",
-                tipo: "Gestor",
-                email: "gestor@outlook.com",
-                senha: SenhaHasher.Gerar("gestor123")
-            ));
-
-            await db.SaveChangesAsync();
-        }
+        Console.WriteLine(
+            $"ID: {usuario.Id} | Email: [{usuario.Email}] | Tipo: [{usuario.Tipo}]"
+        );
     }
+
+    string email = "gestor@outlook.com";
+
+    // Compara ignorando espaços e maiúsculas/minúsculas.
+    bool existeUsuario = usuarios.Any(u =>
+        string.Equals(
+            u.Email?.Trim(),
+            email,
+            StringComparison.OrdinalIgnoreCase
+        )
+    );
+
+    Console.WriteLine($"Gestor já existe? {existeUsuario}");
+
+    if (!existeUsuario)
+    {
+        db.Usuarios.Add(new Usuario(
+            nome: "Josué",
+            email: email,
+            senha: SenhaHasher.Gerar("gestor123"),
+            tipo: "gestor"
+        ));
+
+        await db.SaveChangesAsync();
+        Console.WriteLine("Gestor cadastrado!");
+    }
+}
+
 
 }

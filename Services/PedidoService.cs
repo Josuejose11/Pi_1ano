@@ -96,7 +96,7 @@ public class PedidoService{
         await using var db = new AppDbContext();
         var pedido = await db.Pedidos
         .Include(p => p.Itens)
-            .ThenInclude(i => i.Produto)
+        .ThenInclude(i => i.Produto)
         .FirstOrDefaultAsync(p => p.Id == pedidoId);
 
         if (pedido == null)
