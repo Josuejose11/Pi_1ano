@@ -1,113 +1,102 @@
-using Microsoft.EntityFrameworkCore;
+
 using Models;
-using PI_1ANO.Data;
+using Services;
 
 namespace Api;
 
-public record ProdutoDto(string? Nome, decimal? Preco, int? Estoque);
+public record ProdutoDto(string? Nome, decimal Preco, int Estoque);
 public record EstoqueDto(int? Quantidade);
 
-// CRUD de produtos:
-//   GET    /api/produtos                 -> lista todos          (Read)
-//   POST   /api/produtos                 -> cria                 (Create)
-//   PUT    /api/produtos/{id}            -> edita                (Update)
-//   DELETE /api/produtos/{id}            -> exclui               (Delete)
-//   POST   /api/produtos/{id}/estoque    -> soma unidades ao estoque
 public static class ProdutoEndpoints
 {
     public static void MapProdutoEndpoints(this IEndpointRouteBuilder app)
     {
-        // MapGroup: todas as rotas abaixo começam com /api/produtos
         var rotas = app.MapGroup("/api/produtos");
 
         // ---------- READ ----------
-        rotas.MapGet("/", async (AppDbContext db) =>
+        rotas.MapGet("/", async (ProdutoService service) =>
         {
-            var lista = await db.Produtos
-                .OrderBy(p => p.Nome)
-                .Select(p => new { p.Id, p.Nome, p.Preco, p.Estoque })
-                .ToListAsync();
-            return Results.Ok(lista); // vira JSON: [{"id":1,"nome":"...","preco":24.9,"estoque":18}, ...]
+            var lista = await service.ListarProdutos();
+
+            return Results.Ok(lista.Select(Mapear));
+        });
+
+        // ---------- BUSCAR POR NOME ----------
+        rotas.MapGet("/buscar", async (string nome, ProdutoService service) =>
+        {
+            var lista = await service.BuscarPorNome(nome);
+
+            return Results.Ok(lista.Select(Mapear));
         });
 
         // ---------- CREATE ----------
-        rotas.MapPost("/", async (ProdutoDto dto, AppDbContext db) =>
+        rotas.MapPost("/", async (ProdutoDto dto, ProdutoService service) =>
         {
-            string? erro = Validar(dto);
-            if (erro != null) return Resposta.Erro(erro);
-
             var produto = new Produto
-            {
-                Nome = LimparEspacos(dto.Nome!),
-                Preco = Math.Round(dto.Preco!.Value, 2),
-                Estoque = dto.Estoque
-            };
-            db.Produtos.Add(produto);
-            await db.SaveChangesAsync(); // aqui o INSERT acontece de fato no MySQL
+            (
+                dto.Nome,
+                dto.Preco,
+                dto.Estoque
+            );
+
+            bool criado = await service.CreateProduto(produto);
+
+            if (!criado)
+                return Resposta.Erro("Não foi possível cadastrar o produto. Verifique os dados.");
+
             return Results.Ok(Mapear(produto));
         });
 
         // ---------- UPDATE ----------
-        rotas.MapPut("/{id:int}", async (int id, ProdutoDto dto, AppDbContext db) =>
+        rotas.MapPut("/{id:int}", async (int id, ProdutoDto dto, ProdutoService service) =>
         {
-            var produto = await db.Produtos.FindAsync(id);
-            if (produto == null) return Resposta.NaoEncontrado("Produto não encontrado.");
+            var dados = new Produto
+            (
+                dto.Nome,
+                dto.Preco,
+                dto.Estoque
+            );
 
-            string? erro = Validar(dto);
-            if (erro != null) return Resposta.Erro(erro);
+            bool atualizado = await service.AtualizarProduto(id, dados);
 
-            produto.Nome = LimparEspacos(dto.Nome!);
-            produto.Preco = Math.Round(dto.Preco!.Value, 2);
-            produto.Estoque = dto.Estoque;
-            await db.SaveChangesAsync(); // o EF percebe o que mudou e faz só o UPDATE necessário
-            return Results.Ok(Mapear(produto));
+            if (!atualizado)
+                return Resposta.Erro("Não foi possível atualizar o produto.");
+
+            return Results.Ok("Produto atualizado com sucesso.");
         });
 
         // ---------- DELETE ----------
-        rotas.MapDelete("/{id:int}", async (int id, AppDbContext db) =>
+        rotas.MapDelete("/{id:int}", async (int id, ProdutoService service) =>
         {
-            var produto = await db.Produtos.FindAsync(id);
-            if (produto == null) return Resposta.NaoEncontrado("Produto não encontrado.");
+            bool excluido = await service.DeletarProduto(id);
 
-            // Produto que já foi vendido não pode sumir: os pedidos antigos dependem dele.
-            bool temPedidos = await db.ItensPedido.AnyAsync(i => i.ProdutoId == id);
-            if (temPedidos)
-                return Resposta.Erro("Este produto aparece em pedidos e não pode ser excluído. Zere o estoque para tirá-lo da venda.", 409);
+            if (!excluido)
+                return Resposta.Erro("Não foi possível excluir o produto. Ele pode não existir ou estar vinculado a pedidos.");
 
-            db.Produtos.Remove(produto);
-            await db.SaveChangesAsync();
-            return Results.NoContent(); // 204: deu certo, não há nada para devolver
+            return Results.NoContent();
         });
 
-        // ---------- ESTOCAR (soma ao estoque) ----------
-        rotas.MapPost("/{id:int}/estoque", async (int id, EstoqueDto dto, AppDbContext db) =>
+        // ---------- ESTOCAR ----------
+        rotas.MapPost("/{id:int}/estoque", async (int id, EstoqueDto dto, ProdutoService service) =>
         {
-            var produto = await db.Produtos.FindAsync(id);
-            if (produto == null) return Resposta.NaoEncontrado("Produto não encontrado.");
+            if (dto.Quantidade == null)
+                return Resposta.Erro("Informe uma quantidade válida.");
 
-            if (dto.Quantidade is null || dto.Quantidade <= 0)
-                return Resposta.Erro("A quantidade a adicionar precisa ser maior que zero.");
+            bool estocado = await service.Estocar(id, dto.Quantidade.Value);
 
-            // "+" e não "=": soma ao que já existe (estoque 10 + 5 = 15).
-            produto.Estoque = (produto.Estoque ?? 0) + dto.Quantidade.Value;
-            await db.SaveChangesAsync();
-            return Results.Ok(Mapear(produto));
+            if (!estocado)
+                return Resposta.Erro("Não foi possível adicionar ao estoque. Verifique o produto e a quantidade.");
+
+            return Results.Ok("Estoque atualizado com sucesso.");
         });
     }
 
-    // Devolve a mensagem de erro, ou null se estiver tudo certo.
-    private static string? Validar(ProdutoDto d)
+    // ---------- MAPEAR ----------
+    private static object Mapear(Produto p) => new
     {
-        if (string.IsNullOrWhiteSpace(d.Nome)) return "Informe o nome do produto.";
-        if (d.Preco is null || d.Preco < 0) return "Informe um preço válido (zero ou maior).";
-        if (d.Estoque is null || d.Estoque < 0) return "O estoque precisa ser um número inteiro, zero ou maior.";
-        return null;
-    }
-
-    // "  Café   em grão " -> "Café em grão"
-    private static string LimparEspacos(string texto)
-        => string.Join(" ", texto.Split(' ', StringSplitOptions.RemoveEmptyEntries));
-
-    // Monta só os campos que o HTML precisa (evita devolver a entidade inteira do banco).
-    private static object Mapear(Produto p) => new { p.Id, p.Nome, p.Preco, p.Estoque };
+        p.Id,
+        p.Nome,
+        p.Preco,
+        p.Estoque
+    };
 }

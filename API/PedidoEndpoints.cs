@@ -19,7 +19,7 @@ public static class PedidoEndpoints
         // ---------- READ ----------
         rotas.MapGet("/", async (int? clienteId) =>
         {
-            var lista = await PedidoService.ListarPedidos(clienteId);
+            var lista = await PedidoService.ListarPedidos();
 
             return Results.Ok(lista.Select(Mapear));
         });
@@ -50,7 +50,7 @@ public static class PedidoEndpoints
             if (dto.Status == null)
                 return Resposta.Erro("Status inválido.");
 
-            var atualizado = await PedidoService.AtualizarStatus(id, dto.Status);
+            var atualizado = await PedidoService.CancelarPedido(id);
 
             if (!atualizado)
                 return Resposta.Erro("Não foi possível atualizar o pedido.");

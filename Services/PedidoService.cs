@@ -47,14 +47,16 @@ public class PedidoService{
         }
         return resultado;
     }
-    public static async Task CancelarPedido(int pedidoId)
+    
+    // Mudar status do pedido para cancelado 
+    public static async Task<bool> CancelarPedido(int pedidoId)
     {
         await using var db = new AppDbContext();
         var pedido = await db.Pedidos.Include(p => p.Itens).ThenInclude(i => i.Produto).FirstOrDefaultAsync(p => p.Id == pedidoId);
         if (pedido == null)
         {
             Console.WriteLine("Pedido não encontrado");
-            return;
+            return false;
         }
         pedido.Cancelar();
         foreach (var item in pedido.Itens)
@@ -63,5 +65,6 @@ public class PedidoService{
         }
         await db.SaveChangesAsync();
         Console.WriteLine($"Pedido de ID: {pedidoId} cancelado, itens voltaram ao estoque");
+        return true;
     }
 }

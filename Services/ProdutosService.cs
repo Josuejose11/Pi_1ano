@@ -1,8 +1,10 @@
 using Models;
 using Validators;
-namespace Services;
 using Microsoft.EntityFrameworkCore;
 using PI_1ANO.Data;
+
+namespace Services;
+
 public class ProdutoService{
     private readonly ProdutoValidator _validator;
 
@@ -10,12 +12,14 @@ public class ProdutoService{
     {
         _validator = validator;
     }
-    // Cadastra o produto
+
+    // CREATE - Cadastra o produto
     public async Task<bool> CreateProduto(Produto produto)
     {
         if (!_validator.ValidarProduto(produto))
             return false;
         await using var db = new AppDbContext();
+        
         db.Produtos.Add(produto);
         Console.WriteLine($"Produto de ID: {produto.Id} | Produto: {produto.Nome} adicionado com sucesso");
         await db.SaveChangesAsync();
@@ -23,10 +27,12 @@ public class ProdutoService{
     }
     
     // Lista todos os produtos
-    public static async Task<List<Produto>> ListarProdutos()
+    public async Task<List<Produto>> ListarProdutos()
     {
         await using var db = new AppDbContext();
-        var resultado = await db.Produtos.ToListAsync();
+        var resultado = await db.Produtos
+        .OrderBy(p => p.Nome)
+        .ToListAsync();
         if (resultado.Count == 0)
         {
             Console.WriteLine("Produto não encontrado");
@@ -35,10 +41,13 @@ public class ProdutoService{
     }
     
     // Busca produto por nome
-    public static async Task<List<Produto>> BuscarPorNome(string nome)
+    public async Task<List<Produto>> BuscarPorNome(string nome)
     {
         await using var db = new AppDbContext();
-        var resultado = db.Produtos.Where(p => EF.Functions.Like(p.Nome, $"%{nome}%")).ToList();
+        var resultado = db.Produtos
+        .Where(p => EF.Functions.Like(p.Nome, $"%{nome}%"))
+        .OrderBy(p => p.Nome)
+        .ToList();
         if (resultado.Count == 0)
         {
             Console.WriteLine("Produto não encontrado");
@@ -82,35 +91,75 @@ public class ProdutoService{
         return true;
     }
     
-    // Adiciona ao estoque do produto
+    // UPDATE - Adiciona unidades ao estoque
     public async Task<bool> Estocar(int id, int entrada)
     {
-        await using var db = new AppDbContext();
         if (!_validator.ValidarEstoque(entrada))
             return false;
+
+        await using var db = new AppDbContext();
+
         var produto = await db.Produtos.FindAsync(id);
+
         if (produto == null)
-        {
-            Console.WriteLine("Produto não encontrado");
             return false;
-        }
-        produto.Estoque += entrada;
+
+        produto.Estoque = produto.Estoque + entrada;
+
         await db.SaveChangesAsync();
-        Console.WriteLine($"ID: {id} - Foi adicionado ao estoque: {entrada} com sucesso");
+
+        Console.WriteLine($"Foram adicionadas {entrada} unidades ao produto {id}.");
+
         return true;
     }
+
     
-    // Deleta o produto
-    public static async Task DeletarProduto(int id)
+    // DELETE - Exclui produto
+    public async Task<bool> DeletarProduto(int id)
     {
         await using var db = new AppDbContext();
+
         var produto = await db.Produtos.FindAsync(id);
-        if(produto == null)
-        {
-            Console.WriteLine("Produto não encontrado");
-            return;
-        }
+
+        if (produto == null)
+            return false;
+
+        // Não permite excluir produtos que aparecem em pedidos.
+        bool temPedidos = await db.ItensPedido
+            .AnyAsync(i => i.ProdutoId == id);
+
+        if (temPedidos)
+            return false;
+
         db.Produtos.Remove(produto);
+
         await db.SaveChangesAsync();
+
+        return true;
     }
+
+     // UPDATE - Atualiza nome, preço e estoque
+    public async Task<bool> AtualizarProduto(int id, Produto dados)
+    {
+        await using var db = new AppDbContext();
+
+        var produto = await db.Produtos.FindAsync(id);
+
+        if (produto == null)
+            return false;
+
+        if (!_validator.ValidarProduto(dados))
+            return false;
+
+        produto.Nome = dados.Nome;
+        produto.Preco = dados.Preco;
+        produto.Estoque = dados.Estoque;
+
+        await db.SaveChangesAsync();
+
+        Console.WriteLine($"Produto ID {id} atualizado com sucesso.");
+
+        return true;
+    }
+
 }
