@@ -46,7 +46,7 @@ public static class PedidoEndpoints
             return Results.Ok(Mapear(pedido));
         });
 
-        // ---------- UPDATE (status) ----------
+        // UPDATE (status) 
         rotas.MapPut("/{id:int}/status", async (int id, StatusDto dto) =>
         {
             if (dto.Status == null)

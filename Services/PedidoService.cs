@@ -11,7 +11,7 @@ public class PedidoService{
         var usuario = await db.Usuarios.FindAsync(clienteId);
         if (usuario == null)
         {
-            Console.WriteLine("Usuario não encontrado");
+            Console.WriteLine("Usuário não encontrado");
             return null;
         }
         var pedido = new Pedido{ClienteId = clienteId};

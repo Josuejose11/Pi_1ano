@@ -51,13 +51,13 @@ public class Pedido
     }
     public void Aprovar()
     {
-        if (Status == "Aprovado")
+        if (Status == "Concluído")
         {
-            Console.WriteLine("Esse pedido já está aprovado");
+            Console.WriteLine("Esse pedido já está concluído");
         }
         else
         {
-            Status = "Aprovado";
+            Status = "Concluído";
         }
     }
 }
