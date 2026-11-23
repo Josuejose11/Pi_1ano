@@ -15,6 +15,7 @@ builder.WebHost.UseUrls("http://localhost:5000");
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<ProdutoValidator>();
 builder.Services.AddScoped<ProdutoService>();
 
 var app = builder.Build();
