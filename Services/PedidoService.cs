@@ -67,6 +67,8 @@ public class PedidoService{
         Console.WriteLine($"Pedido de ID: {pedidoId} cancelado, itens voltaram ao estoque");
         return true;
     }
+
+    // DELETE 
     public static async Task<bool> ExcluirPedido(int id)
     {
         await using var db = new AppDbContext();
@@ -100,12 +102,12 @@ public class PedidoService{
         if (pedido == null)
             return false;
 
-        if (pedido.Status == "Cancelado" || pedido.Status == "Concluido")
+        if (pedido.Status == "Cancelado" || pedido.Status == "Concluído")
             return false;
 
-        if (novoStatus == "Concluido")
+        if (novoStatus == "Concluído")
         {
-            pedido.Status = "Concluido";
+            pedido.Status = "Concluído";
         }
         else if (novoStatus == "Cancelado")
         {
