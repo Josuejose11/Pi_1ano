@@ -13,11 +13,8 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL(
-            @"server=localhost;
-            database=GerenciadorDeEstoqueEVenda;
-            user=root;
-            Password=Senac2026;"
+        optionsBuilder.UseSqlite(
+            @"Data Source = crud.db"
         );
     }
 
