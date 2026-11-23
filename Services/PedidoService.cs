@@ -4,6 +4,7 @@ namespace Services;
 using Microsoft.EntityFrameworkCore;
 using PI_1ANO.Data;
 public class PedidoService{
+    // CREATE 
     public static async Task<Pedido?> CreatePedido(int usuarioId, List<ItemPedido> ItensPedidos)
     {
         await using var db = new AppDbContext();
@@ -34,6 +35,8 @@ public class PedidoService{
         await db.SaveChangesAsync();
         return pedido;
     }
+
+    // READ 
     public static async Task<List<Pedido>> ListarPedidos()
     {
         await using var db = new AppDbContext();
