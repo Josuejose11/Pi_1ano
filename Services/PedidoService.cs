@@ -67,4 +67,60 @@ public class PedidoService{
         Console.WriteLine($"Pedido de ID: {pedidoId} cancelado, itens voltaram ao estoque");
         return true;
     }
+    public static async Task<bool> ExcluirPedido(int id)
+    {
+        await using var db = new AppDbContext();
+        var pedido = await db.Pedidos.Include(p => p.Itens).ThenInclude(i => i.Produto).FirstOrDefaultAsync(p => p.Id == id);
+        if (pedido == null)
+        {
+            Console.WriteLine("Pedido não encontrado");
+            return false;
+        }
+        if (pedido.Status != "Cancelado")
+        {
+            foreach (var item in pedido.Itens)
+            {
+                item.Produto.Estoque += item.Quantidade;
+            }
+            Console.WriteLine("Itens voltaram ao estoque");
+        }
+        Console.WriteLine($"Pedido de ID: {id} excluindo");
+        db.Pedidos.Remove(pedido);
+        await db.SaveChangesAsync();
+        return true;
+    }
+    public static async Task<bool> AtualizarStatus(int pedidoId, string novoStatus)
+    {
+        await using var db = new AppDbContext();
+        var pedido = await db.Pedidos
+        .Include(p => p.Itens)
+            .ThenInclude(i => i.Produto)
+        .FirstOrDefaultAsync(p => p.Id == pedidoId);
+
+        if (pedido == null)
+            return false;
+
+        if (pedido.Status == "Cancelado" || pedido.Status == "Concluido")
+            return false;
+
+        if (novoStatus == "Concluido")
+        {
+            pedido.Status = "Concluido";
+        }
+        else if (novoStatus == "Cancelado")
+        {
+            pedido.Status = "Cancelado";
+            foreach (var item in pedido.Itens)
+            {
+                item.Produto.Estoque += item.Quantidade;
+            }
+        }
+        else
+        {
+            return false;
+        }
+        await db.SaveChangesAsync();
+        return true;
+    }
+
 }
