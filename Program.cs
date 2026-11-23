@@ -1,5 +1,8 @@
 ﻿﻿using Api;
+using Models;
 using PI_1ANO.Data;
+using Services;
+using Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,9 @@ builder.WebHost.UseUrls("http://localhost:5000");
 // simplesmente pedir um "AppDbContext db" como parâmetro e o ASP.NET entrega um pronto
 // (um novo para cada requisição, descartado no final).
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<ProdutoService>();
 
 var app = builder.Build();
 

@@ -25,7 +25,7 @@ public static class LoginEndpoints
             // Procura na tabela Usuarios (traz Cliente ou Gestor, conforme a coluna "Tipo").
             Usuario? usuario = await db.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
 
-            string tipo = usuario.Tipo;
+            string? tipo = usuario?.Tipo;
 
             // Mensagem igual para "e-mail não existe" e "senha errada": não revela se o e-mail está cadastrado.
             if (usuario == null || !SenhaHasher.Conferir(dto.Senha ?? "", usuario.Senha) || tipo != dto.Tipo)

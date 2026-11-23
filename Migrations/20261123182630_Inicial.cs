@@ -7,11 +7,30 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Pi_1ano.Migrations
 {
     /// <inheritdoc />
-    public partial class AdicionarPedidos : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Produtos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "longtext", nullable: true),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Estoque = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produtos", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
@@ -19,9 +38,9 @@ namespace Pi_1ano.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(type: "longtext", nullable: false),
-                    Email = table.Column<string>(type: "longtext", nullable: false),
+                    Email = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
                     Senha = table.Column<string>(type: "longtext", nullable: false),
-                    Funcao = table.Column<string>(type: "longtext", nullable: false)
+                    Tipo = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,17 +57,17 @@ namespace Pi_1ano.Migrations
                     Data = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Status = table.Column<string>(type: "longtext", nullable: false),
                     ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                    ClienteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pedidos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pedidos_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
+                        name: "FK_Pedidos_Usuarios_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -77,7 +96,7 @@ namespace Pi_1ano.Migrations
                         column: x => x.ProdutoId,
                         principalTable: "Produtos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -92,9 +111,15 @@ namespace Pi_1ano.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_UsuarioId",
+                name: "IX_Pedidos_ClienteId",
                 table: "Pedidos",
-                column: "UsuarioId");
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Email",
+                table: "Usuarios",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -105,6 +130,9 @@ namespace Pi_1ano.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pedidos");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

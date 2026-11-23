@@ -52,6 +52,9 @@ namespace Pi_1ano.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime(6)");
 
@@ -59,15 +62,12 @@ namespace Pi_1ano.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.Property<decimal?>("ValorTotal")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Pedidos");
                 });
@@ -78,13 +78,13 @@ namespace Pi_1ano.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("Estoque")
+                    b.Property<int>("Estoque")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
-                    b.Property<decimal?>("Preco")
+                    b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -100,11 +100,8 @@ namespace Pi_1ano.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Funcao")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -114,7 +111,14 @@ namespace Pi_1ano.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Usuarios");
                 });
@@ -130,7 +134,7 @@ namespace Pi_1ano.Migrations
                     b.HasOne("Models.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Pedido");
@@ -140,13 +144,13 @@ namespace Pi_1ano.Migrations
 
             modelBuilder.Entity("Models.Pedido", b =>
                 {
-                    b.HasOne("Models.Usuario", "Usuario")
+                    b.HasOne("Models.Usuario", "Cliente")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("Models.Pedido", b =>
