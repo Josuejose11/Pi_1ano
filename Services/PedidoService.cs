@@ -64,14 +64,14 @@ public class PedidoService{
         await db.SaveChangesAsync();
         Console.WriteLine($"Pedido de ID: {pedidoId} cancelado, itens voltaram ao estoque");
     }
-    public static async Task ExcluirPedido(int id)
+    public static async Task<bool> ExcluirPedido(int id)
     {
         await using var db = new AppDbContext();
         var pedido = await db.Pedidos.Include(p => p.Itens).ThenInclude(i => i.Produto).FirstOrDefaultAsync(p => p.Id == id);
         if (pedido == null)
         {
             Console.WriteLine("Pedido não encontrado");
-            return;
+            return false;
         }
         if (pedido.Status != "Cancelado")
         {
@@ -84,5 +84,47 @@ public class PedidoService{
         Console.WriteLine($"Pedido de ID: {id} excluindo");
         db.Pedidos.Remove(pedido);
         await db.SaveChangesAsync();
+        return true;
+    }
+    public static async Task<bool> AtualizarStatus(int pedidoId)
+    {
+        await using var db = new AppDbContext();
+        var pedido = await db.Pedidos.Include(p => p.Itens).ThenInclude(i => i.Produto).FirstOrDefaultAsync(p => p.Id == pedidoId);
+        if (pedido == null)
+        {
+            Console.WriteLine("Pedido não encontrado");
+            return false;
+        }
+        if (pedido.Status == "Cancelado" || pedido.Status == "Concluido")
+        {
+        Console.WriteLine($"Este pedido já está '{pedido.Status}' e não pode ser alterado.");
+        return false;
+        }
+        Console.WriteLine("1- Concluir");
+        Console.WriteLine("2- Cancelar");
+        var opcao = Console.ReadLine();
+        if (opcao == "1")
+        {
+            pedido.Status = "Concluido";
+            await db.SaveChangesAsync();
+            Console.WriteLine($"Pedido de ID: {pedidoId} concluido");
+            return true;
+        }
+        if (opcao == "2")
+        {
+            pedido.Status = "Cancelado";
+            foreach (var item in pedido.Itens)
+            {
+                item.Produto.Estoque += item.Quantidade;
+            }
+            await db.SaveChangesAsync();
+            Console.WriteLine($"Pedido de ID: {pedidoId} cancelado, itens voltaram ao estoque");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Opção inválida!");
+            return false;
+        }
     }
 }

@@ -19,7 +19,7 @@ public static class PedidoEndpoints
         // ---------- READ ----------
         rotas.MapGet("/", async (int? clienteId) =>
         {
-            var lista = await PedidoService.ListarPedidos(clienteId);
+            var lista = await PedidoService.ListarPedidos();
 
             return Results.Ok(lista.Select(Mapear));
         });
@@ -50,7 +50,7 @@ public static class PedidoEndpoints
             if (dto.Status == null)
                 return Resposta.Erro("Status inválido.");
 
-            var atualizado = await PedidoService.AtualizarStatus(id, dto.Status);
+            var atualizado = await PedidoService.AtualizarStatus(id);
 
             if (!atualizado)
                 return Resposta.Erro("Não foi possível atualizar o pedido.");
@@ -74,16 +74,15 @@ public static class PedidoEndpoints
     private static object Mapear(Pedido p) => new
     {
         p.Id,
-        p.UsuarioId,
-        UsuarioNome = p.Usuario?.Nome ?? "Usuário removido",
+        p.ClienteId,
+        UsuarioNome = p.Cliente?.Nome ?? "Usuário removido",
         p.Data,
         p.Status,
-        Total = p.Itens.Sum(i => i.Preco * i.Quantidade),
+        Total = p.Itens.Sum(i => i.PrecoUnitario * i.Quantidade),
         Itens = p.Itens.Select(i => new
         {
             i.ProdutoId,
-            Nome = i.Produto?.Nome ?? i.Nome,
-            i.Preco,
+            i.PrecoUnitario,
             i.Quantidade
         }).ToList()
     };
