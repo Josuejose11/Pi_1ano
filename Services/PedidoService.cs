@@ -64,4 +64,25 @@ public class PedidoService{
         await db.SaveChangesAsync();
         Console.WriteLine($"Pedido de ID: {pedidoId} cancelado, itens voltaram ao estoque");
     }
+    public static async Task ExcluirPedido(int id)
+    {
+        await using var db = new AppDbContext();
+        var pedido = await db.Pedidos.Include(p => p.Itens).ThenInclude(i => i.Produto).FirstOrDefaultAsync(p => p.Id == id);
+        if (pedido == null)
+        {
+            Console.WriteLine("Pedido não encontrado");
+            return;
+        }
+        if (pedido.Status != "Cancelado")
+        {
+            foreach (var item in pedido.Itens)
+            {
+                item.Produto.Estoque += item.Quantidade;
+            }
+            Console.WriteLine("Itens voltaram ao estoque");
+        }
+        Console.WriteLine($"Pedido de ID: {id} excluindo");
+        db.Pedidos.Remove(pedido);
+        await db.SaveChangesAsync();
+    }
 }
