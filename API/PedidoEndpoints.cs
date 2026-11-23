@@ -46,19 +46,24 @@ public static class PedidoEndpoints
             return Results.Ok(Mapear(pedido));
         });
 
-        // UPDATE (status) 
+        
+        // UPDATE (status)
         rotas.MapPut("/{id:int}/status", async (int id, StatusDto dto) =>
         {
-            if (dto.Status == null)
+            if (string.IsNullOrWhiteSpace(dto.Status))
                 return Resposta.Erro("Status inválido.");
 
-            var atualizado = await PedidoService.CancelarPedido(id);
+            var atualizado = await PedidoService.AtualizarStatus(
+                id,
+                dto.Status.Trim()
+            );
 
             if (!atualizado)
                 return Resposta.Erro("Não foi possível atualizar o pedido.");
 
             return Results.Ok("Status atualizado com sucesso.");
         });
+
 
         // ---------- DELETE ----------
         rotas.MapDelete("/{id:int}", async (int id) =>
