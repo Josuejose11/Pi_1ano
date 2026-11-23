@@ -5,7 +5,7 @@ namespace Models;
 public class Pedido
 {
      public int Id { get; set; }
-    public DateTime Data { get; set; }
+    public DateTime Data { get; set; } = DateTime.Now;
     public string Status { get; set; } = "Pendente";
     public decimal? ValorTotal { get; set; }
     public int ClienteId { get; set; }
