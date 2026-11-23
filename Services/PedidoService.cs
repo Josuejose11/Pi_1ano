@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using PI_1ANO.Data;
 public class PedidoService{
     // CREATE 
-    public static async Task<Pedido?> CreatePedido(int usuarioId, List<ItemPedido> ItensPedidos)
+    public static async Task<Pedido?> CreatePedido(int clienteId, List<ItemPedido> ItensPedidos)
     {
         await using var db = new AppDbContext();
-        var usuario = await db.Usuarios.FindAsync(usuarioId);
+        var usuario = await db.Usuarios.FindAsync(clienteId);
         if (usuario == null)
         {
             Console.WriteLine("Usuario não encontrado");
             return null;
         }
-        var pedido = new Pedido{UsuarioId = usuarioId};
+        var pedido = new Pedido{ClienteId = clienteId};
         foreach (var item in ItensPedidos)
         {
             var produto = await db.Produtos.FindAsync(item.ProdutoId);
@@ -40,7 +40,7 @@ public class PedidoService{
     public static async Task<List<Pedido>> ListarPedidos()
     {
         await using var db = new AppDbContext();
-        var resultado = await db.Pedidos.Include(p => p.Usuario).Include(p => p.Itens).ThenInclude(i => i.Produto).ToListAsync();
+        var resultado = await db.Pedidos.Include(p => p.Cliente).Include(p => p.Itens).ThenInclude(i => i.Produto).ToListAsync();
         if (resultado.Count == 0)
         {
             Console.WriteLine("Pedido não encontrado");
