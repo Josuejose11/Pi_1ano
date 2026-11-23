@@ -24,9 +24,18 @@ public static class ClienteEndpoints
         // busca todos os clientes cadastrados no banco
         rotas.MapGet("/", async (AppDbContext db) =>
         {
-            var lista = await UsuarioService.ListarUsuarios();
+        var lista = await db.Usuarios
+        .Where(u => u.Tipo == "cliente" || u.Tipo == "Cliente")
+        .Select(c => new
+        {
+            c.Id,
+            c.Nome,
+            c.Email,
+            Pedidos = db.Pedidos.Count(p => p.ClienteId == c.Id)
+        })
+        .ToListAsync();
 
-            return Results.Ok(lista);
+        return Results.Ok(lista);
         });
 
 

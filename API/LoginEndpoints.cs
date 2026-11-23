@@ -32,7 +32,7 @@ public static class LoginEndpoints
                 return Resposta.Erro("E-mail ou senha incorretos.", 401);
 
             // Devolve só o necessário. A senha (hash) nunca sai do servidor.
-            return Results.Ok(new { usuario.Id, usuario.Nome, usuario.Email, tipo });
+            return Results.Ok(new { usuario.Id, usuario.Nome, usuario.Email, tipo = tipo!.ToLower()});
         });
     }
 }
