@@ -28,7 +28,7 @@ public static class LoginEndpoints
             string? tipo = usuario?.Tipo;
 
             // Mensagem igual para "e-mail não existe" e "senha errada": não revela se o e-mail está cadastrado.
-            if (usuario == null || !SenhaHasher.Conferir(dto.Senha ?? "", usuario.Senha) || tipo != dto.Tipo)
+            if (usuario == null || !SenhaHasher.Conferir(dto.Senha ?? "", usuario.Senha) || !string.Equals(tipo, dto.Tipo, StringComparison.OrdinalIgnoreCase))
                 return Resposta.Erro("E-mail ou senha incorretos.", 401);
 
             // Devolve só o necessário. A senha (hash) nunca sai do servidor.
