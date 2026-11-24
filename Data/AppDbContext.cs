@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite(
+        optionsBuilder.UseMySQL(
             @"Server=localhost;
             Database=sistema_pedidos;
             user=root;  
