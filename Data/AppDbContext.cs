@@ -14,7 +14,10 @@ public class AppDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite(
-            @"Data Source = crud.db"
+            @"Server=localhost;
+            Database=sistema_pedidos;
+            user=root;  
+            password=Senac2026;"
         );
     }
 
