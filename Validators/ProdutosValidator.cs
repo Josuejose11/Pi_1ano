@@ -29,11 +29,16 @@ public class ProdutoValidator
     // Validacao nome
     public bool ValidarNome(string nome)
     {
+        if (!nome.Any(char.IsLetter))                            
+        {
+            return false;
+        }
         if (string.IsNullOrWhiteSpace(nome.Trim()))                            
         {
             return false;
         }
         nome = string.Join(" ", nome.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        nome = char.ToUpper(nome[0]) + nome[1..];
         return true;
     }
 
