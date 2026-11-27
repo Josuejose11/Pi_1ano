@@ -1,13 +1,33 @@
-
+using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using Models;
+using PI_1ANO.Data;
 using Services;
 
 namespace Api;
-
 public record HistoricoDto(int UsuarioId, string TipoEntidade, int EntidadeId, string Acao, string? Descricao, DateTime DataHora);
+
+public static class UsuarioAtual
+{
+    public static int? Id(HttpContext ctx)
+        => int.TryParse(ctx.Request.Headers["X-Usuario-Id"].ToString(), out int id) ? id : null;
+
+    // Procura o usuário no banco pelo cabeçalho. Devolve null se não mandou ou se não existe.
+    public static async Task<Usuario?> Obter(HttpContext ctx, AppDbContext db)
+    {
+        int? id = Id(ctx);
+        return id == null ? null : await db.Usuarios.FindAsync(id.Value);
+    }
+
+    public static bool EhGestor(Usuario u)
+        => string.Equals(u.Tipo, "gestor", StringComparison.OrdinalIgnoreCase);
+}
 
 public static class HistoricoEndpoints
 {
+
+    
+
     public static void MapHistoricoEndpoints(this IEndpointRouteBuilder app)
     {
         var rotas = app.MapGroup("/api/Historico");

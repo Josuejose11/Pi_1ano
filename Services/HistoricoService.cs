@@ -66,4 +66,8 @@ public class HistoricoService
         }
         return resultado;
     }
+
+    public static Task Registrar(HttpContext ctx,
+        string tipoEntidade, int entidadeId, string acao, string? descricao, int? autorId = null)
+        => service.RegistrarHistorico(autorId ?? UsuarioAtual.Id(ctx) ?? 0, tipoEntidade, entidadeId, acao, descricao);
 }
