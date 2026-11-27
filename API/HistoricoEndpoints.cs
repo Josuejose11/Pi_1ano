@@ -5,8 +5,10 @@ using PI_1ANO.Data;
 using Services;
 
 namespace Api;
-public record HistoricoDto(int UsuarioId, string TipoEntidade, int EntidadeId, string Acao, string? Descricao, DateTime DataHora);
 
+public record NovoHistoricoDto(string? TipoEntidade, int EntidadeId, string? Acao, string? Descricao);
+
+// Identifica o usuario 
 public static class UsuarioAtual
 {
     public static int? Id(HttpContext ctx)
@@ -25,61 +27,76 @@ public static class UsuarioAtual
 
 public static class HistoricoEndpoints
 {
-
-    
+    // Registra ação no histórico
+    public static Task Registrar(this HistoricoService service, HttpContext ctx,
+        string tipoEntidade, int entidadeId, string acao, string? descricao, int? autorId = null)
+        => service.RegistrarHistorico(autorId ?? UsuarioAtual.Id(ctx) ?? 0, tipoEntidade, entidadeId, acao, descricao);
 
     public static void MapHistoricoEndpoints(this IEndpointRouteBuilder app)
     {
-        var rotas = app.MapGroup("/api/Historico");
+        var rotas = app.MapGroup("/api/historico");
 
-        // ---------- READ ----------
-        rotas.MapGet("/", async (HistoricoService service) =>
+        // read 
+        rotas.MapGet("/", async (HttpContext ctx, AppDbContext db, HistoricoService service,
+            int? usuarioId, string? nome, string? tipo, string? acao, DateTime? de, DateTime? ate, int? limite) =>
         {
-            var lista = await service.VerHistorico();
+            var ator = await UsuarioAtual.Obter(ctx, db);
+            if (ator == null)
+                return Resposta.Erro("Faça login para ver o histórico.", 401);
 
-            return Results.Ok(lista.Select(Mapear));
+            bool gestor = UsuarioAtual.EhGestor(ator);
+
+            var filtro = new HistoricoFiltro(
+                UsuarioId: gestor ? usuarioId : ator.Id,   // cliente: sempre o próprio id
+                Nome: gestor ? nome : null,
+                TipoEntidade: tipo,
+                Acao: acao,
+                De: de,
+                Ate: ate,
+                Limite: limite ?? 200);
+
+            return Results.Ok(await service.Listar(filtro));
         });
 
-        // ---------- BUSCAR POR NOME ----------
-        rotas.MapGet("/buscar", async (string nome, HistoricoService service) =>
+        //  BUSCAR POR NOME (só gestor) 
+        rotas.MapGet("/buscar", async (string nome, HttpContext ctx, AppDbContext db, HistoricoService service) =>
         {
-            var lista = await service.BuscarPorNome(nome);
+            var ator = await UsuarioAtual.Obter(ctx, db);
+            if (ator == null)
+                return Resposta.Erro("Faça login para ver o histórico.", 401);
+            if (!UsuarioAtual.EhGestor(ator))
+                return Resposta.Erro("Só o gestor pode buscar o histórico de outros usuários.", 403);
 
-            return Results.Ok(lista.Select(Mapear));
+            return Results.Ok(await service.BuscarPorNome(nome));
         });
 
-        // ---------- CREATE ----------
-        rotas.MapPost("/", async (HistoricoDto dto, HistoricoService service) =>
+        //CREATE 
+        rotas.MapPost("/", async (NovoHistoricoDto dto, HttpContext ctx, AppDbContext db, HistoricoService service) =>
         {
-            var historico = new Historico
-            (
-                dto.UsuarioId,
-                dto.TipoEntidade,
-                dto.EntidadeId,
-                dto.Acao,
-                dto.Descricao
-            );
+            var ator = await UsuarioAtual.Obter(ctx, db);
+            if (ator == null)
+                return Resposta.Erro("Faça login para registrar no histórico.", 401);
+            if (!UsuarioAtual.EhGestor(ator))
+                return Resposta.Erro("Só o gestor pode registrar manualmente no histórico.", 403);
 
-            bool criado = await service.RegistrarHistorico(historico.UsuarioId, historico.TipoEntidade, historico.EntidadeId, historico.Acao, historico.Descricao);
+            if (string.IsNullOrWhiteSpace(dto.TipoEntidade) || string.IsNullOrWhiteSpace(dto.Acao))
+                return Resposta.Erro("Informe o tipo e a ação.");
+
+            bool criado = await service.RegistrarHistorico(
+                ator.Id, dto.TipoEntidade.Trim(), dto.EntidadeId, dto.Acao.Trim(), dto.Descricao?.Trim());
 
             if (!criado)
-                return Resposta.Erro("Não foi possível cadastrar o produto. Verifique os dados.");
+                return Resposta.Erro("Não foi possível gravar no histórico.", 500);
 
-            return Results.Ok(Mapear(historico));
+            return Results.Ok(new { mensagem = "Registro adicionado ao histórico." });
         });
+
     }
+}
 
-        
-
-    // ---------- MAPEAR ----------
-    private static object Mapear(Historico h) => new
-    {
-        h.UsuarioId,
-        h.TipoEntidade, 
-        h.EntidadeId, 
-        h.Acao,
-        h.Descricao, 
-        h.DataHora
-    };
-
+// Formata dinheiro como "R$ 24,90" para as descrições do histórico.
+public static class TextoHistorico
+{
+    private static readonly CultureInfo Br = new("pt-BR");
+    public static string Moeda(decimal? valor) => (valor ?? 0).ToString("C", Br);
 }
