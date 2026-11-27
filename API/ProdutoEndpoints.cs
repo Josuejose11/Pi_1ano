@@ -6,7 +6,7 @@ using Services;
 
 namespace Api;
 
-public record ProdutoDto(string? Nome, decimal Preco, int Estoque);
+public record ProdutoDto(string Nome, decimal Preco, int Estoque);
 public record EstoqueDto(int? Quantidade);
 
 public static class ProdutoEndpoints
