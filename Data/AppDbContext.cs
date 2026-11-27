@@ -10,11 +10,15 @@ public class AppDbContext : DbContext
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Pedido> Pedidos { get; set; }
     public DbSet<ItemPedido> ItensPedido { get; set; }
+    public DbSet<Historico> Historico { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite(
-            @"Data Source = crud.db"
+        optionsBuilder.UseMySQL(
+            @"Server=localhost;
+            Database=sistema_pedidos;
+            user=root;  
+            password=Senac2026;"
         );
     }
 

@@ -38,12 +38,17 @@ public static class UsuarioValidator
     public static bool ValidarNome(string nome, out string nomeTratado)
     {
         nomeTratado = string.Empty;
+        if (!nome.Any(char.IsLetter))                            
+        {
+            return false;
+        }
 
         if (string.IsNullOrWhiteSpace(nome.Trim()))                            
         {
             return false;
         }
         nomeTratado = string.Join(" ", nome.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        nomeTratado = char.ToUpper(nomeTratado[0]) + nomeTratado[1..];
         return true;
     }
 

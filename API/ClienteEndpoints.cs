@@ -40,7 +40,7 @@ public static class ClienteEndpoints
 
 
         // cria um novo cliente (ou o próprio cliente se cadastrando)
-        rotas.MapPost("/", async (ClienteDto dto, AppDbContext db) =>
+        rotas.MapPost("/", async (ClienteDto dto, AppDbContext db, HistoricoService historico, HttpContext ctx) =>
         {
             var v = Validar(dto, exigirSenha: true);
             if (v.Erro != null) return Resposta.Erro(v.Erro);
@@ -53,11 +53,15 @@ public static class ClienteEndpoints
             db.Usuarios.Add(cliente);
             await db.SaveChangesAsync();
 
+            // Quem fez: o gestor logado (se for ele cadastrando) ou o próprio cliente (cadastro na tela de entrada).
+            await historico.Registrar(ctx, EntidadeHistorico.Usuario, cliente.Id, AcaoHistorico.Criou,
+                $"Conta do cliente \"{cliente.Nome}\" criada.", autorId: UsuarioAtual.Id(ctx) ?? cliente.Id);
+
             return Results.Ok(new { cliente.Id, cliente.Nome, cliente.Email, tipo = "cliente" });
         });
 
         // edita um cliente (senha em branco = mantém a atual)
-        rotas.MapPut("/{id:int}", async (int id, ClienteDto dto, AppDbContext db) =>
+        rotas.MapPut("/{id:int}", async (int id, ClienteDto dto, AppDbContext db, HistoricoService historico, HttpContext ctx) =>
         {
             var cliente = await db.Usuarios.OfType<Usuario>().FirstOrDefaultAsync(c => c.Id == id);
             if (cliente == null) return Resposta.NaoEncontrado("Cliente não encontrado.");
@@ -75,10 +79,13 @@ public static class ClienteEndpoints
                 cliente.Senha = SenhaHasher.Gerar(dto.Senha);
 
             await db.SaveChangesAsync();
+            await historico.Registrar(ctx, EntidadeHistorico.Usuario, cliente.Id, AcaoHistorico.Editou,
+                $"Cliente \"{cliente.Nome}\" editado" + (string.IsNullOrEmpty(dto.Senha) ? "." : " (senha alterada)."));
+
             return Results.Ok(new { cliente.Id, cliente.Nome, cliente.Email, tipo = "cliente" });
         });
 
-        rotas.MapDelete("/{id:int}", async (int id, AppDbContext db) =>
+        rotas.MapDelete("/{id:int}", async (int id, AppDbContext db, HistoricoService historico, HttpContext ctx) =>
         {
             var cliente = await db.Usuarios.OfType<Usuario>().FirstOrDefaultAsync(c => c.Id == id);
             if (cliente == null) return Resposta.NaoEncontrado("Cliente não encontrado.");
@@ -88,6 +95,9 @@ public static class ClienteEndpoints
 
             db.Usuarios.Remove(cliente);
             await db.SaveChangesAsync();
+            await historico.Registrar(ctx, EntidadeHistorico.Usuario, id, AcaoHistorico.Excluiu,
+                $"Cliente \"{cliente.Nome}\" excluído.");
+
             return Results.NoContent();
         });
     }
