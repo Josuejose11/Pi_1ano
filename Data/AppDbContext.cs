@@ -14,11 +14,8 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL(
-            @"Server=localhost;
-            Database=sistema_pedidos;
-            user=root;  
-            password=Senac2026;"
+        optionsBuilder.UseSqlite(
+            @"Data Source=sistema_pedidos.db"
         );
     }
 
